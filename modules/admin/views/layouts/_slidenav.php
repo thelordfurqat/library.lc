@@ -16,13 +16,19 @@
                 <!-- Nav items -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="/admin">
+                        <a class="nav-link <?=Yii::$app->controller->id=='default'?'active':''?>" href="/admin">
                             <i class="ni ni-tv-2 text-primary"></i>
                             <span class="nav-link-text">Bosh sahifa</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="icons.html">
+                        <a class="nav-link <?=Yii::$app->controller->id=='book'?'active':''?>" href="/admin/book">
+                            <i class="ni ni-books text-info"></i>
+                            <span class="nav-link-text">Kitoblar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?=Yii::$app->urlManager->createUrl(['/theme'])?>" target="_blank">
                             <i class="ni ni-planet text-orange"></i>
                             <span class="nav-link-text">Icons</span>
                         </a>
@@ -73,9 +79,21 @@
                 <!-- Navigation -->
                 <ul class="navbar-nav mb-md-3">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?=Yii::$app->urlManager->createUrl(['/admin/user'])?>" target="_blank">
-                            <i class="ni ni-circle-08"></i>
+                        <a class="nav-link <?=Yii::$app->controller->id=='user'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/user'])?>">
+                            <i class="ni ni-circle-08 text-blue"></i>
                             <span class="nav-link-text">Foydalanuvchilar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?=Yii::$app->controller->id=='subject'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/subject'])?>">
+                            <i class="ni ni-book-bookmark text-pink"></i>
+                            <span class="nav-link-text">Fanlar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?=Yii::$app->controller->id=='genre'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/genre'])?>">
+                            <i class="ni ni-hat-3 text-purple"></i>
+                            <span class="nav-link-text">Janrlar</span>
                         </a>
                     </li>
                     <li class="nav-item">
@@ -96,12 +114,7 @@
                             <span class="nav-link-text">Plugins</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active active-pro" href="upgrade.html">
-                            <i class="ni ni-send text-dark"></i>
-                            <span class="nav-link-text">Upgrade to PRO</span>
-                        </a>
-                    </li>
+
                 </ul>
             </div>
         </div>

@@ -34,8 +34,8 @@ use Yii;
  * @property int $is_delete O'chirilganmi
  * @property string $created Yaratilgan vaqti
  * @property string $updated Yangilangan vaqti
- * @property string $genre Janr
- * @property string $subject Fan
+ * @property int $genre_id Janr
+ * @property int $subject_id Fan
  * @property int $user_id Foydalanuvchi
  * @property string $image Muqova rasmi
  *
@@ -60,11 +60,11 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['alias', 'name', 'certificate', 'certificator_id', 'year', 'made_in', 'publisher_id', 'authors', 'code', 'shtrix_code', 'isbn_code', 'detail', 'page_size', 'size', 'muqova', 'genre', 'subject', 'user_id'], 'required'],
-            [['certificator_id', 'publisher_id', 'sales', 'show_counter', 'price', 'old_price', 'arenda', 'like_counter', 'page_size', 'status', 'is_delete', 'user_id'], 'integer'],
+            [['alias', 'name', 'certificate', 'certificator_id', 'year', 'made_in', 'publisher_id', 'authors', 'code', 'shtrix_code', 'isbn_code', 'detail', 'page_size', 'size', 'muqova', 'genre_id', 'subject_id', 'user_id'], 'required'],
+            [['certificator_id', 'publisher_id', 'sales', 'show_counter', 'price', 'old_price', 'arenda', 'like_counter', 'page_size', 'status', 'is_delete', 'user_id','subject_id'], 'integer'],
             [['year', 'made_in', 'made_date', 'created', 'updated'], 'safe'],
             [['detail'], 'string'],
-            [['alias', 'name', 'certificate', 'authors', 'code', 'shtrix_code', 'isbn_code', 'size', 'muqova', 'genre', 'subject', 'image'], 'string', 'max' => 255],
+            [['alias', 'name', 'certificate', 'authors', 'code', 'shtrix_code', 'isbn_code', 'size', 'muqova', 'genre_id', 'subject', 'image'], 'string', 'max' => 255],
             [['code'], 'unique'],
             [['certificator_id'], 'exist', 'skipOnError' => true, 'targetClass' => Certificate::className(), 'targetAttribute' => ['certificator_id' => 'id']],
             [['publisher_id'], 'exist', 'skipOnError' => true, 'targetClass' => Publisher::className(), 'targetAttribute' => ['publisher_id' => 'id']],
@@ -105,8 +105,8 @@ class Book extends \yii\db\ActiveRecord
             'is_delete' => 'O\'chirilganmi',
             'created' => 'Yaratilgan vaqti',
             'updated' => 'Yangilangan vaqti',
-            'genre' => 'Janr',
-            'subject' => 'Fan',
+            'genre_id' => 'Janr',
+            'subject_id' => 'Fan',
             'user_id' => 'Foydalanuvchi',
             'image' => 'Muqova rasmi',
         ];
@@ -131,6 +131,15 @@ class Book extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Publisher::className(), ['id' => 'publisher_id']);
     }
+    /**
+     * Gets query for [[Subject]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getSubject()
+    {
+        return $this->hasOne(Subject::className(), ['id' => 'subject_id']);
+    }
 
     /**
      * Gets query for [[User]].
@@ -140,6 +149,15 @@ class Book extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+    /**
+     * Gets query for [[Genre]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getGenre()
+    {
+        return $this->hasOne(Genre::className(), ['id' => 'genre_id']);
     }
 
     /**

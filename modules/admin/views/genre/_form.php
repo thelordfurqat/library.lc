@@ -10,14 +10,14 @@ use yii\widgets\ActiveForm;
 
 <div class="genre-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(['action'=>$model->isNewRecord? '' : Yii::$app->urlManager->createUrl(['/admin/genre/update','id'=>$model->id])]); ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true,'autofocus'=>true]) ?>
 
-    <?= $form->field($model, 'count')->textInput() ?>
+<!--    --><?//= $form->field($model, 'count')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

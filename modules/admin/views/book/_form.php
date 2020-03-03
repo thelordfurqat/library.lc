@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
+<!--    --><?//= $form->field($model, 'alias')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -28,15 +28,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'authors')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'sales')->textInput() ?>
+<!--    --><?//= $form->field($model, 'sales')->textInput() ?>
 
-    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
+<!--    --><?//= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'show_counter')->textInput() ?>
+<!--    --><?//= $form->field($model, 'show_counter')->textInput() ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 
-    <?= $form->field($model, 'old_price')->textInput() ?>
+<!--    --><?//= $form->field($model, 'old_price')->textInput() ?>
 
     <?= $form->field($model, 'arenda')->textInput() ?>
 
@@ -46,7 +46,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'made_date')->textInput() ?>
 
-    <?= $form->field($model, 'like_counter')->textInput() ?>
+<!--    --><?//= $form->field($model, 'like_counter')->textInput() ?>
 
     <?= $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
 
@@ -56,9 +56,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'muqova')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'status')->textInput() ?>
+<!--    --><?//= $form->field($model, 'status')->textInput() ?>
 
-    <?= $form->field($model, 'is_delete')->textInput() ?>
+<!--    --><?//= $form->field($model, 'is_delete')->textInput() ?>
 
     <?= $form->field($model, 'created')->textInput() ?>
 

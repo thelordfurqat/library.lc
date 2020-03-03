@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\User;
 use app\models\search\UserSearch;
+use yii\helpers\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,7 +38,7 @@ class UserController extends Controller
     {
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->setPagination(['pageSize'=>20]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -52,8 +53,20 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $oldPass=$model->password;
+        $oldImage=$model->image;
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->password)
+                $model->encrypt();
+            else $model->password=$oldPass;
+            $model->upload($oldImage);
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+        }
+        $model->password='';
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -66,7 +79,11 @@ class UserController extends Controller
     {
         $model = new User();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->password)
+                $model->encrypt();
+            $model->upload();
+            if($model->password && $model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -85,11 +102,17 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        $oldPass=$model->password;
+        $oldImage=$model->image;
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->password)
+                $model->encrypt();
+            else $model->password=$oldPass;
+            $model->upload($oldImage);
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+        $model->password='';
         return $this->render('update', [
             'model' => $model,
         ]);
@@ -123,5 +146,48 @@ class UserController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionGetregion($id){
+            $rows = \app\models\Region::find()->where(['country_id' => $id])->all();
+
+            echo "<option>-Viloyatni tanlang-</option>";
+
+            if(count($rows)>0){
+                foreach($rows as $row){
+                    echo "<option value='".$row->id."'>".$row->name."</option>";
+                }
+            }
+            else{
+                echo "<option>-Viloyat topilmadi-</option>";
+            }
+
+
+    }
+    public function actionGetdistrict($id){
+        $rows = \app\models\District::find()->where(['region_id' => $id])->all();
+
+        echo "<option>-Tumanni tanlang-</option>";
+
+        if(count($rows)>0){
+            foreach($rows as $row){
+                echo "<option value='".$row->id."'>".$row->name."</option>";
+            }
+        }
+        else{
+            echo "<option>-Tumanlar topilmadi-</option>";
+        }
+
+    }
+
+    public function actionStatus($id){
+
+        $model = $this->findModel($id);
+        $model->status = $model->status == 0 ? 1 : 0;
+        if($model->save()){
+            return $model->status;
+        }else{
+            return 2;
+        }
     }
 }

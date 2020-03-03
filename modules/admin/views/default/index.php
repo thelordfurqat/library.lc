@@ -1,3 +1,7 @@
+<?php
+$this->title='Bosh sahifa';
+
+?>
 <div class="row">
     <div class="col-xl-8">
         <div class="card bg-default">

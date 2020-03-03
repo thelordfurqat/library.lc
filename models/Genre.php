@@ -27,7 +27,7 @@ class Genre extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'count'], 'required'],
+            [['name'], 'required'],
             [['count'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];

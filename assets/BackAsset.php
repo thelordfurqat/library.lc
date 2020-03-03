@@ -28,7 +28,7 @@ class BackAsset extends AssetBundle
         'css/mystyle.css',
     ];
     public $js = [
-        'theme/assets/vendor/jquery/dist/jquery.min.js',
+//        'theme/assets/vendor/jquery/dist/jquery.min.js',
         'theme/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
         'theme/assets/vendor/js-cookie/js.cookie.js',
         'theme/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js',

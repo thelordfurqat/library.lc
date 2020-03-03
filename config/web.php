@@ -21,6 +21,7 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+
         'user' => [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
@@ -54,6 +55,14 @@ $config = [
         ],
         'assetManager' => [
             'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => [
+                        'theme/assets/vendor/jquery/dist/jquery.min.js',
+                    ]
+                ],
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [
                         'bootstrap.css' => 'theme/assets/css/bootstrap/bootstrap.css'
@@ -72,7 +81,7 @@ $config = [
 
 ];
 
-if (YII_ENV_DEV) {
+if (!YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [

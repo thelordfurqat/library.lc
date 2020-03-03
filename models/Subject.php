@@ -10,6 +10,7 @@ use Yii;
  * @property int $id Id
  * @property string $name Fan
  * @property int $count Kitoblar soni
+ * @property Book $Books Kitoblar
  */
 class Subject extends \yii\db\ActiveRecord
 {
@@ -27,7 +28,7 @@ class Subject extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'count'], 'required'],
+            [['name'], 'required'],
             [['count'], 'integer'],
             [['name'], 'string', 'max' => 255],
         ];
@@ -43,5 +44,14 @@ class Subject extends \yii\db\ActiveRecord
             'name' => 'Fan',
             'count' => 'Kitoblar soni',
         ];
+    }
+    /**
+     * Gets query for [[Books]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBooks()
+    {
+        return $this->hasMany(Book::className(), ['subject_id' => 'id']);
     }
 }

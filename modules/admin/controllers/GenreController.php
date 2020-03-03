@@ -37,7 +37,10 @@ class GenreController extends Controller
     {
         $searchModel = new GenreSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $model=new Genre();
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['index']);
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -85,12 +88,12 @@ class GenreController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
+        $this->layout = "empty.php";
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['index']);
         }
 
-        return $this->render('update', [
+        return $this->render('_form', [
             'model' => $model,
         ]);
     }
