@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "publisher".
@@ -17,6 +18,7 @@ use Yii;
  * @property string $detail Qo'shimcha
  * @property string $created Yaratildi
  * @property string $image Rasm
+ * @property string $address
  *
  * @property Book[] $books
  * @property Country $country
@@ -39,11 +41,11 @@ class Publisher extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'country_id', 'region_id', 'district_id', 'detail', 'image'], 'required'],
+            [['name', ], 'required'],
             [['country_id', 'region_id', 'district_id'], 'integer'],
             [['detail'], 'string'],
             [['created'], 'safe'],
-            [['name', 'lat', 'lng', 'image'], 'string', 'max' => 255],
+            [['name', 'lat', 'lng', 'image','address'], 'string', 'max' => 255],
             [['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['country_id' => 'id']],
             [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['district_id' => 'id']],
             [['region_id'], 'exist', 'skipOnError' => true, 'targetClass' => Region::className(), 'targetAttribute' => ['region_id' => 'id']],
@@ -66,6 +68,7 @@ class Publisher extends \yii\db\ActiveRecord
             'detail' => 'Qo\'shimcha',
             'created' => 'Yaratildi',
             'image' => 'Rasm',
+            'address'=>'Manzil'
         ];
     }
 
@@ -107,5 +110,23 @@ class Publisher extends \yii\db\ActiveRecord
     public function getRegion()
     {
         return $this->hasOne(Region::className(), ['id' => 'region_id']);
+    }
+
+    public function upload($old = null){
+        if($this->image = UploadedFile::getInstance($this,'image')){
+            $name = microtime(true).'.'.$this->image->extension;
+            $this->image->saveAs(Yii::$app->basePath.'/web/publisher/'.$name);
+            $this->image = $name;
+            return true;
+        }else{
+            if($old != null){
+                $this->image = $old;
+                return true;
+            }else{
+                $this->image = "default.png";
+                return true;
+            }
+
+        }
     }
 }

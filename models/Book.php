@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "book".
@@ -34,7 +35,7 @@ use Yii;
  * @property int $is_delete O'chirilganmi
  * @property string $created Yaratilgan vaqti
  * @property string $updated Yangilangan vaqti
- * @property int $genre_id Janr
+ * @property int $genres Janr
  * @property int $subject_id Fan
  * @property int $user_id Foydalanuvchi
  * @property string $image Muqova rasmi
@@ -46,6 +47,9 @@ use Yii;
  */
 class Book extends \yii\db\ActiveRecord
 {
+
+    public $authors_int;
+    public $genres_int;
     /**
      * {@inheritdoc}
      */
@@ -60,11 +64,13 @@ class Book extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['alias', 'name', 'certificate', 'certificator_id', 'year', 'made_in', 'publisher_id', 'authors', 'code', 'shtrix_code', 'isbn_code', 'detail', 'page_size', 'size', 'muqova', 'genre_id', 'subject_id', 'user_id'], 'required'],
+            [['alias', 'name', 'code', 'user_id'], 'required'],
             [['certificator_id', 'publisher_id', 'sales', 'show_counter', 'price', 'old_price', 'arenda', 'like_counter', 'page_size', 'status', 'is_delete', 'user_id','subject_id'], 'integer'],
             [['year', 'made_in', 'made_date', 'created', 'updated'], 'safe'],
             [['detail'], 'string'],
-            [['alias', 'name', 'certificate', 'authors', 'code', 'shtrix_code', 'isbn_code', 'size', 'muqova', 'genre_id', 'subject', 'image'], 'string', 'max' => 255],
+            ['authors_int','each','rule'=>['integer']],
+            ['genres_int','each','rule'=>['integer']],
+            [['alias', 'name', 'certificate', 'authors', 'code', 'shtrix_code', 'isbn_code', 'size', 'muqova', 'genres', 'image'], 'string', 'max' => 255],
             [['code'], 'unique'],
             [['certificator_id'], 'exist', 'skipOnError' => true, 'targetClass' => Certificate::className(), 'targetAttribute' => ['certificator_id' => 'id']],
             [['publisher_id'], 'exist', 'skipOnError' => true, 'targetClass' => Publisher::className(), 'targetAttribute' => ['publisher_id' => 'id']],
@@ -84,7 +90,7 @@ class Book extends \yii\db\ActiveRecord
             'certificate' => 'Sertifikat kodi',
             'certificator_id' => 'Sertifikator',
             'year' => 'Yil',
-            'made_in' => 'Chiqarilgan sana',
+            'made_in' => 'Chiqarilgan yili',
             'publisher_id' => 'Nashriyotchi',
             'authors' => 'Avtor',
             'sales' => 'Sotuvlar soni',
@@ -105,7 +111,7 @@ class Book extends \yii\db\ActiveRecord
             'is_delete' => 'O\'chirilganmi',
             'created' => 'Yaratilgan vaqti',
             'updated' => 'Yangilangan vaqti',
-            'genre_id' => 'Janr',
+            'genres' => 'Janr',
             'subject_id' => 'Fan',
             'user_id' => 'Foydalanuvchi',
             'image' => 'Muqova rasmi',
@@ -157,7 +163,7 @@ class Book extends \yii\db\ActiveRecord
      */
     public function getGenre()
     {
-        return $this->hasOne(Genre::className(), ['id' => 'genre_id']);
+        return $this->hasOne(Genre::className(), ['id' => 'genres']);
     }
 
     /**
@@ -168,5 +174,23 @@ class Book extends \yii\db\ActiveRecord
     public function getFiles()
     {
         return $this->hasMany(Files::className(), ['book_id' => 'id']);
+    }
+
+    public function upload($old = null){
+        if($this->image = UploadedFile::getInstance($this,'image')){
+            $name = microtime(true).'.'.$this->image->extension;
+            $this->image->saveAs(Yii::$app->basePath.'/web/book-images/'.$name);
+            $this->image = $name;
+            return true;
+        }else{
+            if($old != null){
+                $this->image = $old;
+                return true;
+            }else{
+                $this->image = "default.png";
+                return true;
+            }
+
+        }
     }
 }

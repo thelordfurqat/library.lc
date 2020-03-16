@@ -52,6 +52,19 @@ class PublisherController extends Controller
      */
     public function actionView($id)
     {
+        $model=$this->findModel($id);
+        $oldImage=$model->image;
+        if ($model->load(Yii::$app->request->post()) ) {
+            if ($model->country_id == null)
+                $model->country_id = 0;
+            if ($model->region_id == null)
+                $model->region_id = 0;
+            if ($model->district_id == null)
+                $model->district_id = 0;
+            $model->upload($oldImage);
+            if ($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -66,7 +79,15 @@ class PublisherController extends Controller
     {
         $model = new Publisher();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->country_id==null)
+                $model->country_id=0;
+            if($model->region_id==null)
+                $model->region_id=0;
+            if( $model->district_id==null)
+                $model->district_id=0;
+            $model->upload();
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -86,8 +107,17 @@ class PublisherController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $oldImage=$model->image;
+        if ($model->load(Yii::$app->request->post()) ) {
+            if ($model->country_id == null)
+                $model->country_id = 0;
+            if ($model->region_id == null)
+                $model->region_id = 0;
+            if ($model->district_id == null)
+                $model->district_id = 0;
+            $model->upload($oldImage);
+            if ($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [

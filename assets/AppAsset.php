@@ -20,9 +20,22 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
+//        'css/site.css',
+        'front-theme/css/bootstrap.css',
+        'front-theme/css/style.css',
+        'front-theme/css/font-awesome.css',
+        '//fonts.googleapis.com/css?family=Montserrat:400,700',
+        '//fonts.googleapis.com/css?family=Noto+Sans:400,700',
+
     ];
     public $js = [
+        'front-theme/js/jquery-1.11.1.min.js',
+        'front-theme/js/move-top.js',
+        'front-theme/js/easing.js',
+        'front-theme/js/bootstrap.js',
+        'front-theme/js/jquery.mycart.js',
+        'front-theme/js/lords.js',
+
     ];
     public $depends = [
         'yii\web\YiiAsset',

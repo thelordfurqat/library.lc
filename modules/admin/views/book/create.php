@@ -1,5 +1,7 @@
 <?php
 
+use buttflattery\formwizard\FormWizard;
+use yii\bootstrap\Tabs;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
@@ -21,7 +23,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="card-body">
-
+                <?
+//                Yii::$app->layout='empty';
+                ?>
                 <?= $this->render('_form', [
                     'model' => $model,
                 ]) ?>

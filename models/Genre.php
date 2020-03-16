@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id Id
  * @property string $name Janr
+ * @property Book $books Kitoblar
  * @property int $count Janrdagi kitoblar soni
  */
 class Genre extends \yii\db\ActiveRecord
@@ -43,5 +44,14 @@ class Genre extends \yii\db\ActiveRecord
             'name' => 'Janr',
             'count' => 'Janrdagi kitoblar soni',
         ];
+    }
+    /**
+     * Gets query for [[Books]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getBooks()
+    {
+        return Book::find()->filterWhere(['like','genres','%"'.$this->id.'"%'])->all();
     }
 }

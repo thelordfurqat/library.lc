@@ -51,9 +51,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     <img alt="'.$x->name.'" src="'.Yii::$app->homeUrl.'profile/'.$x->image.'">
                                 </a>
                                 <div class="media-body">
-                                <a href="'.Yii::$app->urlManager->createUrl(['/admin/user/view','id'=>$x->id]).'">
+                                 <h3 class="pt-2"><a href="'.Yii::$app->urlManager->createUrl(['/admin/user/view','id'=>$x->id]).'">
                                     <span class="name mb-0 text-sm badge badge-dot mr-4">'.$x->name. $active.'</span>
-                                </a>
+                                </a></h3>
                                     
                                 </div>
                             </div>';},

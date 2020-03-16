@@ -2,9 +2,13 @@
 
 namespace app\controllers;
 
+use app\models\Author;
+use app\models\Book;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
@@ -61,7 +65,36 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $mostliked=Book::find()->orderBy(['like_counter'=>SORT_DESC])->limit(4)->all();
+        $mostviewed=Book::find()->orderBy(['show_counter'=>SORT_DESC])->limit(4)->all();
+        $mostseled=Book::find()->orderBy(['sales'=>SORT_DESC])->limit(4)->all();
+        $latest=Book::find()->orderBy(['id'=>SORT_DESC])->limit(8)->all();
+        $bestAuthors=Author::find()->all();
+        ArrayHelper::multisort($bestAuthors,function ($x){return $x->likecounter;},[SORT_DESC]);
+//debug($bestAuthors);
+        $best3Authors=array_slice($bestAuthors,0,3);
+//        debug($_['products']);
+//        exit();
+
+        return $this->render('index',[
+            'mostliked'=>$mostliked,
+            'mostviewed'=>$mostviewed,
+            'mostseled'=>$mostseled,
+            'best3Authors'=>$best3Authors,
+            'latest'=>$latest,
+        ]);
+    }
+    public function actionGetBook($code){
+        if($model=Book::find()->where(['code'=>$code])->one()){
+            $this->layout='empty';
+            echo $this->render('_modal',[
+                'model'=>$model,
+            ]);
+
+        }
+        else
+            throw new NotFoundHttpException('Gashir soki.');
+        exit();
     }
 
     /**
@@ -123,6 +156,10 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
+        if(Yii::$app->request->post()){
+            echo 'ok';
+            exit();
+        }
         return $this->render('about');
     }
 }

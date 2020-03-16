@@ -5,17 +5,28 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Certificate */
 
-$this->title = 'Update Certificate: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Certificates', 'url' => ['index']];
+$this->title = 'Taxrirlash: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Sertifikatlar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Taxrirlash';
 ?>
-<div class="certificate-update">
+<div class="row">
+    <div class="col-xl-12 order-xl-1">
+        <div class="card">
+            <div class="card-header">
+                <div class="row align-items-center">
+                    <div class="col-8">
+                        <h3 class="mb-0"><?=$this->title?></h3>
+                    </div>
 
-    <h1><?= Html::encode($this->title) ?></h1>
+                </div>
+            </div>
+            <div class="card-body">
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
-
+                <?= $this->render('_form', [
+                    'model' => $model,
+                ]) ?>
+            </div>
+        </div>
+    </div>
 </div>

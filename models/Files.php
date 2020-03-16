@@ -21,6 +21,7 @@ use Yii;
  */
 class Files extends \yii\db\ActiveRecord
 {
+    public $files;
     /**
      * {@inheritdoc}
      */
@@ -35,10 +36,11 @@ class Files extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code', 'preview', 'detail', 'book_id'], 'required'],
+            [['code','book_id','files'], 'required'],
             [['preview', 'detail'], 'string'],
             [['book_id', 'is_delete', 'status'], 'integer'],
             [['created', 'updated'], 'safe'],
+            ['files','each','rule'=>['int']],
             [['code'], 'string', 'max' => 255],
             [['book_id'], 'exist', 'skipOnError' => true, 'targetClass' => Book::className(), 'targetAttribute' => ['book_id' => 'id']],
         ];

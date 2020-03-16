@@ -11,17 +11,26 @@ use yii\widgets\ActiveForm;
 <div class="author-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <div class="pl-lg-4">
+        <div class="row">
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            <div class="col-lg-6">
+                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-6">
+                <br>
+                <?= $form->field($model, 'image')->fileInput(['maxlength' => true]) ?>
+            </div>
+            <div class="col-lg-12">
+                <?= $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
+            </div>
 
-    <?= $form->field($model, 'detail')->textarea(['rows' => 6]) ?>
+        </div>
 
-    <?= $form->field($model, 'code')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'image')->textInput(['maxlength' => true]) ?>
+    </div>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Saqlash', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

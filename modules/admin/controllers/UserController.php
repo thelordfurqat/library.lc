@@ -151,7 +151,7 @@ class UserController extends Controller
     public function actionGetregion($id){
             $rows = \app\models\Region::find()->where(['country_id' => $id])->all();
 
-            echo "<option>-Viloyatni tanlang-</option>";
+            echo "<option value='0'>-Viloyatni tanlang-</option>";
 
             if(count($rows)>0){
                 foreach($rows as $row){
@@ -159,7 +159,7 @@ class UserController extends Controller
                 }
             }
             else{
-                echo "<option>-Viloyat topilmadi-</option>";
+                echo "<option value='0'>-Viloyat topilmadi-</option>";
             }
 
 
@@ -167,7 +167,7 @@ class UserController extends Controller
     public function actionGetdistrict($id){
         $rows = \app\models\District::find()->where(['region_id' => $id])->all();
 
-        echo "<option>-Tumanni tanlang-</option>";
+        echo "<option value='0'>-Tumanni tanlang-</option>";
 
         if(count($rows)>0){
             foreach($rows as $row){
@@ -175,7 +175,7 @@ class UserController extends Controller
             }
         }
         else{
-            echo "<option>-Tumanlar topilmadi-</option>";
+            echo "<option value='0'>-Tumanlar topilmadi-</option>";
         }
 
     }

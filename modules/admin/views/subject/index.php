@@ -71,21 +71,33 @@ Modal::end();
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
 
-                            'name',
+                            [
+                                'attribute'=>'name',
+                                'value'=>function($x){return '<div class="media align-items-center">
+                                
+                                <div class="media-body">
+                                <h3 class="pt-2"><a href="'.Yii::$app->urlManager->createUrl(['/admin/subject/view','id'=>$x->id]).'">
+                                    '.$x->name.'
+                                </a></h3>
+                                    
+                                </div>
+                            </div>';},
+                                'format'=>'raw'
+                            ],
                             'count',
 
                             [
 
                                 'class' => 'yii\grid\ActionColumn',
 
-                                'template' => '{update} {delete} ',
+                                'template' => '{view} {update} {delete} ',
 
                                 'buttons' => [
 
                                     'view' => function ($url,$model) {
                                         return Html::a(
                                                 '<span class="fa fa-eye"></span>',
-                                                $url).'<br>';
+                                                $url);
                                     },
                                     'update' => function ($url,$model) {
                                         return Html::button(

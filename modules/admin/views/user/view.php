@@ -1,5 +1,7 @@
 <?php
 
+use app\models\search\BookSearch;
+use yii\data\ActiveDataProvider;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -62,41 +64,42 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div>
                         <i class="ni education_hat mr-2"></i><?=$model->address?>
                     </div>
+                    <div class="h5 font-weight-300">
+                        <i class="ni location_pin mr-2"></i><p>
+                            <?= Html::a('Taxrirlash', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+                            <?= Html::a('O\'chirish', ['delete', 'id' => $model->id], [
+                                'class' => 'btn btn-danger',
+                                'data' => [
+                                    'confirm' => 'Are you sure you want to delete this item?',
+                                    'method' => 'post',
+                                ],
+                            ]) ?>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="col-xl-8 order-xl-1">
 <!--        --><?//=$this->red('update')?>
-        <div class="row">
-            <div class="col-xl-12 order-xl-1">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col-8">
-                                <h3 class="mb-0"><?=$this->title?></h3>
-                            </div>
-                            <div class="col-4 text-right">
-                                <?= Html::a('O\'chirish', ['delete', 'id' => $model->id], [
-                                    'class' => 'btn btn-sm btn-danger',
-                                    'data' => [
-                                        'confirm' => 'Are you sure you want to delete this item?',
-                                        'method' => 'post',
-                                    ],
-                                ]) ?>
-                            </div>
 
-                        </div>
-                    </div>
-                    <div class="card-body">
+            <!--        --><?//=$this->red('update')?>
+            <?php
+            $searchModel = new BookSearch();
+            $query=Yii::$app->request->queryParams;
+            if(!$query['BookSearch']['user_id'])
+                $query['BookSearch']['user_id']=$model->id;
+            $dataProvider = $searchModel->search($query);
 
-                        <?= $this->render('_form', [
-                            'model' => $model,
-                        ]) ?>
-                    </div>
-                </div>
-            </div>
-        </div>
+            //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+            echo $this->render(Yii::$app->urlManager->createUrl(['/book/index']), [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'user_id'=>$model->id,
+            ]);
+            ?>
+
 
     </div>
 </div>

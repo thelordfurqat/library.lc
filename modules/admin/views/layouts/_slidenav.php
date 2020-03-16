@@ -33,42 +33,7 @@
                             <span class="nav-link-text">Icons</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="map.html">
-                            <i class="ni ni-pin-3 text-primary"></i>
-                            <span class="nav-link-text">Google</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profile.html">
-                            <i class="ni ni-single-02 text-yellow"></i>
-                            <span class="nav-link-text">Profile</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="tables.html">
-                            <i class="ni ni-bullet-list-67 text-default"></i>
-                            <span class="nav-link-text">Tables</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.html">
-                            <i class="ni ni-key-25 text-info"></i>
-                            <span class="nav-link-text">Login</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register.html">
-                            <i class="ni ni-circle-08 text-pink"></i>
-                            <span class="nav-link-text">Register</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="upgrade.html">
-                            <i class="ni ni-send text-dark"></i>
-                            <span class="nav-link-text">Upgrade</span>
-                        </a>
-                    </li>
+
                 </ul>
                 <!-- Divider -->
                 <hr class="my-3">
@@ -84,6 +49,13 @@
                             <span class="nav-link-text">Foydalanuvchilar</span>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <?=Yii::$app->controller->id=='author'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/author'])?>">
+                            <i class="ni ni-single-02 text-blue"></i>
+                            <span class="nav-link-text">Avtorlar</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link <?=Yii::$app->controller->id=='subject'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/subject'])?>">
                             <i class="ni ni-book-bookmark text-pink"></i>
@@ -97,24 +69,17 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html" target="_blank">
-                            <i class="ni ni-palette"></i>
-                            <span class="nav-link-text">Foundation</span>
+                        <a class="nav-link <?=Yii::$app->controller->id=='publisher'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/publisher'])?>">
+                            <i class="ni ni-palette text-info"></i>
+                            <span class="nav-link-text">Nashriyotchilar</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html" target="_blank">
-                            <i class="ni ni-ui-04"></i>
-                            <span class="nav-link-text">Components</span>
+                        <a class="nav-link <?=Yii::$app->controller->id=='certificate'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/certificate'])?>">
+                            <i class="ni ni-paper-diploma text-green"></i>
+                            <span class="nav-link-text">Sertifikatlar</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/plugins/charts.html" target="_blank">
-                            <i class="ni ni-chart-pie-35"></i>
-                            <span class="nav-link-text">Plugins</span>
-                        </a>
-                    </li>
-
                 </ul>
             </div>
         </div>

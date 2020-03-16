@@ -50,7 +50,13 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'enableStrictParsing' => false,
             'rules' => [
+                'login'=>'site/login',
+                'register'=>'site/register',
+                'contact'=>'site/contact',
+                'order-history'=>'site/order-history',
+                'user-profile'=>'site/user-profile',
             ],
         ],
         'assetManager' => [
@@ -81,7 +87,7 @@ $config = [
 
 ];
 
-if (!YII_ENV_DEV) {
+if (YII_ENV_DEV) {
     // configuration adjustments for 'dev' environment
     $config['bootstrap'][] = 'debug';
     $config['modules']['debug'] = [

@@ -90,7 +90,7 @@ class GenreController extends Controller
         $model = $this->findModel($id);
         $this->layout = "empty.php";
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['index']);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('_form', [

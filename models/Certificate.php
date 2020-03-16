@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "certificate".
@@ -15,6 +16,7 @@ use Yii;
  */
 class Certificate extends \yii\db\ActiveRecord
 {
+    public $number;
     /**
      * {@inheritdoc}
      */
@@ -31,6 +33,7 @@ class Certificate extends \yii\db\ActiveRecord
         return [
             [['name', 'image'], 'required'],
             [['name', 'image'], 'string', 'max' => 255],
+            [['number'],'string']
         ];
     }
 
@@ -43,6 +46,7 @@ class Certificate extends \yii\db\ActiveRecord
             'id' => 'Id',
             'name' => 'Nomi',
             'image' => 'Rasm',
+            'number'=>'Raqami',
         ];
     }
 
@@ -54,5 +58,22 @@ class Certificate extends \yii\db\ActiveRecord
     public function getBooks()
     {
         return $this->hasMany(Book::className(), ['certificator_id' => 'id']);
+    }
+    public function upload($old = null){
+        if($this->image = UploadedFile::getInstance($this,'image')){
+            $name = microtime(true).'.'.$this->image->extension;
+            $this->image->saveAs(Yii::$app->basePath.'/web/certificates/'.$name);
+            $this->image = $name;
+            return true;
+        }else{
+            if($old != null){
+                $this->image = $old;
+                return true;
+            }else{
+                $this->image = "default.png";
+                return true;
+            }
+
+        }
     }
 }

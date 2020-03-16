@@ -66,7 +66,10 @@ class AuthorController extends Controller
     {
         $model = new Author();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+            $model->upload();
+            $model->code=GenerateRandomUnicalString(Author::find());
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
