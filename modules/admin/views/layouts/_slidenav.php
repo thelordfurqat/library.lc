@@ -35,6 +35,9 @@
                     </li>
 
                 </ul>
+                <?
+                if(Yii::$app->user->identity->role->role=='Admin'):
+                ?>
                 <!-- Divider -->
                 <hr class="my-3">
                 <!-- Heading -->
@@ -49,7 +52,26 @@
                             <span class="nav-link-text">Foydalanuvchilar</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link <?=Yii::$app->controller->id=='category'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/category'])?>">
+                            <i class="ni ni-align-left-2 text-green"></i>
+                            <span class="nav-link-text">Menyular</span>
+                        </a>
+                    </li>
 
+                    <li class="nav-item">
+                        <a class="nav-link <?=Yii::$app->controller->id=='news'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/news'])?>">
+                            <i class="ni ni-notification-70 text-purple"></i>
+                            <span class="nav-link-text">Postlar</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link <?=Yii::$app->controller->id=='adds'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/adds'])?>">
+                            <i class="ni ni-chart-bar-32 text-blue"></i>
+                            <span class="nav-link-text">Reklamalar</span>
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link <?=Yii::$app->controller->id=='author'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/author'])?>">
                             <i class="ni ni-single-02 text-blue"></i>
@@ -81,6 +103,7 @@
                         </a>
                     </li>
                 </ul>
+                <?endif;?>
             </div>
         </div>
     </div>

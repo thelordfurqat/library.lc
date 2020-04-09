@@ -19,6 +19,11 @@ class Module extends \yii\base\Module
     {
         parent::init();
         \Yii::$app->viewPath = "@app/modules/admin/views";
-        // custom initialization code goes here
+        \Yii::$app->set('user', [
+            'class' => 'yii\web\User',
+            'identityClass' => 'app\models\User',
+            'enableAutoLogin' => true,
+            'loginUrl' => ['admin/default/login'],
+        ]);
     }
 }

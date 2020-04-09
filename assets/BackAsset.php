@@ -20,6 +20,7 @@ class BackAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+//        'theme/assets/bootstrap.css',
         'css/site.css',
         'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700',
         'theme/assets/vendor/nucleo/css/nucleo.css',
@@ -29,6 +30,7 @@ class BackAsset extends AssetBundle
 
     ];
     public $js = [
+//        'front-theme/assets/js/bootstrap.min.js',
 //        'theme/assets/vendor/jquery/dist/jquery.min.js',
         'theme/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js',
         'theme/assets/vendor/js-cookie/js.cookie.js',

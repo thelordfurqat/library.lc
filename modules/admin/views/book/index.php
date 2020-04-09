@@ -127,17 +127,17 @@ if(Yii::$app->controller->id=='book') {
                                     'view' => function ($url,$model) {
                                         return Html::a(
                                                 '<span class="fa fa-eye"></span>',
-                                                ['/admin/book/view','id'=>$model->id]).'<br>';
+                                                $url).'<br>';
                                     },
                                     'update' => function ($url,$model) {
                                         return Html::a(
                                                 '<span class="fa fa-edit"></span>',
-                                                ['/admin/book/update','id'=>$model->id]).'<br>';
+                                                $url).'<br>';
                                     },
                                     'delete' => function ($url,$model) {
                                         return Html::a(
                                             '<span class="fa fa-trash"></span>',
-                                            ['/admin/book/delete','id'=>$model->id],['data-confirm' => Yii::t('yii', 'Are you sure you want to delete?'),
+                                            $url,['data-confirm' => Yii::t('yii', 'Are you sure you want to delete?'),
                                             'data-method' => 'post',]);
                                     },
 

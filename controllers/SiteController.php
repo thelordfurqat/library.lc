@@ -2,8 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\Adds;
 use app\models\Author;
 use app\models\Book;
+use app\models\Genre;
+use app\models\News;
+use app\models\Publisher;
+use app\models\Region;
+use app\models\Subject;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
@@ -65,14 +71,22 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        $mostliked=Book::find()->orderBy(['like_counter'=>SORT_DESC])->limit(4)->all();
-        $mostviewed=Book::find()->orderBy(['show_counter'=>SORT_DESC])->limit(4)->all();
-        $mostseled=Book::find()->orderBy(['sales'=>SORT_DESC])->limit(4)->all();
-        $latest=Book::find()->orderBy(['id'=>SORT_DESC])->limit(8)->all();
+        updatestatus();
+        $mostliked=Book::find()->where(['>','status',0])->orderBy(['like_counter'=>SORT_DESC])->limit(4*8)->all();
+        $mostviewed=Book::find()->where(['>','status',0])->orderBy(['show_counter'=>SORT_DESC])->limit(4*8)->all();
+        $mostseled=Book::find()->where(['>','status',0])->orderBy(['sales'=>SORT_DESC])->limit(6)->all();
+        $latest=Book::find()->where(['>','status',0])->orderBy(['id'=>SORT_DESC])->limit(8*4)->all();
         $bestAuthors=Author::find()->all();
         ArrayHelper::multisort($bestAuthors,function ($x){return $x->likecounter;},[SORT_DESC]);
 //debug($bestAuthors);
-        $best3Authors=array_slice($bestAuthors,0,3);
+        $best3Authors=array_slice($bestAuthors,0,4*8);
+        $genres=Genre::find()->orderBy(['count'=>SORT_DESC])->limit(4*8)->all();
+        $subjects=Subject::find()->orderBy(['count'=>SORT_DESC])->limit(4*8)->all();
+        $publishers=Publisher::find()->limit(4*8)->all();
+        $regions=Region::find()->all();
+        $latest_news=News::find()->where(['cat_id'=>30])->andwhere(['>','status',0])->andwhere(['>','active',0])->orderBy(['sort'=>SORT_DESC,'id'=>SORT_DESC])->limit(5)->all();
+        $partners=News::find()->where(['cat_id'=>37])->andwhere(['>','status',0])->andwhere(['>','active',0])->orderBy(['sort'=>SORT_DESC,'id'=>SORT_DESC])->limit(10)->all();
+
 //        debug($_['products']);
 //        exit();
 
@@ -82,6 +96,12 @@ class SiteController extends Controller
             'mostseled'=>$mostseled,
             'best3Authors'=>$best3Authors,
             'latest'=>$latest,
+            'genres'=>$genres,
+            'subjects'=>$subjects,
+            'publishers'=>$publishers,
+            'regions'=>$regions,
+            'latest_news'=>$latest_news,
+            'partners'=>$partners,
         ]);
     }
     public function actionGetBook($code){

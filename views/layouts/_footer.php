@@ -1,73 +1,163 @@
 <?php
 
 ?>
-<!--footer-->
-<div class="footer">
+<!-- ============================================== INFO BOXES ============================================== -->
+<div class="row our-features-box">
     <div class="container">
-        <div class="col-md-3 footer-grid">
-            <h3>About Us</h3>
-            <p>Nam libero tempore, cum soluta nobis est eligendi
-                optio cumque nihil impedit quo minus id quod maxime
-                placeat facere possimus.</p>
-        </div>
-        <div class="col-md-3 footer-grid ">
-            <h3>Menu</h3>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="kitchen.html">Kitchen</a></li>
-                <li><a href="care.html">Personal Care</a></li>
-                <li><a href="hold.html">Household</a></li>
-                <li><a href="codes.html">Short Codes</a></li>
-                <li><a href="contact.html">Contact</a></li>
-            </ul>
-        </div>
-        <div class="col-md-3 footer-grid ">
-            <h3>Customer Services</h3>
-            <ul>
-                <li><a href="shipping.html">Shipping</a></li>
-                <li><a href="terms.html">Terms & Conditions</a></li>
-                <li><a href="faqs.html">Faqs</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="offer.html">Online Shopping</a></li>
-
-            </ul>
-        </div>
-        <div class="col-md-3 footer-grid">
-            <h3>My Account</h3>
-            <ul>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="register.html">Register</a></li>
-                <li><a href="wishlist.html">Wishlist</a></li>
-
-            </ul>
-        </div>
-        <div class="clearfix"></div>
-        <div class="footer-bottom">
-            <h2 ><a href="index.html"><b>T<br>H<br>E</b>Big Store<span>The Best Supermarket</span></a></h2>
-            <p class="fo-para">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris</p>
-            <ul class="social-fo">
-                <li><a href="#" class=" face"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                <li><a href="#" class=" twi"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-                <li><a href="#" class=" pin"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                <li><a href="#" class=" dri"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-            </ul>
-            <div class=" address">
-                <div class="col-md-4 fo-grid1">
-                    <p><i class="fa fa-home" aria-hidden="true"></i>12K Street , 45 Building Road Canada.</p>
+        <ul>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-truck"></div>
+                    <div class="content-blocks">We ship worldwide</div>
                 </div>
-                <div class="col-md-4 fo-grid1">
-                    <p><i class="fa fa-phone" aria-hidden="true"></i>+1234 758 839 , +1273 748 730</p>
+            </li>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-support"></div>
+                    <div class="content-blocks">call
+                        +1 800 789 0000</div>
                 </div>
-                <div class="col-md-4 fo-grid1">
-                    <p><a href="mailto:info@example.com"><i class="fa fa-envelope-o" aria-hidden="true"></i>info@example1.com</a></p>
+            </li>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-money"></div>
+                    <div class="content-blocks">Money Back Guarantee</div>
                 </div>
-                <div class="clearfix"></div>
+            </li>
+            <li>
+                <div class="feature-box">
+                    <div class="icon-return"></div>
+                    <div class="content">30 days return</div>
+                </div>
+            </li>
 
-            </div>
-        </div>
-        <div class="copy-right">
-            <p> &copy; 2016 Big store. All Rights Reserved | Design by  <a href="http://w3layouts.com/"> W3layouts</a></p>
-        </div>
+        </ul>
     </div>
 </div>
-<!-- //footer-->
+<!-- /.info-boxes -->
+<!-- ============================================== INFO BOXES : END ============================================== -->
+
+<!-- ============================================================= FOOTER ============================================================= -->
+<footer id="footer" class="footer color-bg">
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="address-block">
+
+                        <!-- /.module-heading -->
+
+                        <div class="module-body">
+                            <ul class="toggle-footer" style="">
+                                <li class="media">
+                                    <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i> </span> </div>
+                                    <div class="media-body">
+                                        <p>ThemesGround, 789 Main rd, Anytown, CA 12345 USA</p>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-mobile fa-stack-1x fa-inverse"></i> </span> </div>
+                                    <div class="media-body">
+                                        <p>+(888) 123-4567<br>
+                                            +(888) 456-7890</p>
+                                    </div>
+                                </li>
+                                <li class="media">
+                                    <div class="pull-left"> <span class="icon fa-stack fa-lg"> <i class="fa fa-envelope fa-stack-1x fa-inverse"></i> </span> </div>
+                                    <div class="media-body"> <span><a href="#">marazzo@themesground.com</a></span> </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /.module-body -->
+                </div>
+                <!-- /.col -->
+
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="module-heading">
+                        <h4 class="module-title">Customer Service</h4>
+                    </div>
+                    <!-- /.module-heading -->
+
+                    <div class="module-body">
+                        <ul class='list-unstyled'>
+                            <li class="first"><a href="#" title="Contact us">My Account</a></li>
+                            <li><a href="#" title="About us">Order History</a></li>
+                            <li><a href="#" title="faq">FAQ</a></li>
+                            <li><a href="#" title="Popular Searches">Specials</a></li>
+                            <li class="last"><a href="#" title="Where is my order?">Help Center</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.module-body -->
+                </div>
+                <!-- /.col -->
+
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="module-heading">
+                        <h4 class="module-title">Corporation</h4>
+                    </div>
+                    <!-- /.module-heading -->
+
+                    <div class="module-body">
+                        <ul class='list-unstyled'>
+                            <li class="first"><a title="Your Account" href="#">About us</a></li>
+                            <li><a title="Information" href="#">Customer Service</a></li>
+                            <li><a title="Addresses" href="#">Company</a></li>
+                            <li><a title="Addresses" href="#">Investor Relations</a></li>
+                            <li class="last"><a title="Orders History" href="#">Advanced Search</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.module-body -->
+                </div>
+                <!-- /.col -->
+
+                <div class="col-xs-12 col-sm-6 col-md-3">
+                    <div class="module-heading">
+                        <h4 class="module-title">Why Choose Us</h4>
+                    </div>
+                    <!-- /.module-heading -->
+
+                    <div class="module-body">
+                        <ul class='list-unstyled'>
+                            <li class="first"><a href="#" title="About us">Shopping Guide</a></li>
+                            <li><a href="#" title="Blog">Blog</a></li>
+                            <li><a href="#" title="Company">Company</a></li>
+                            <li><a href="#" title="Investor Relations">Investor Relations</a></li>
+                            <li class=" last"><a href="contact-us.html" title="Suppliers">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <!-- /.module-body -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="copyright-bar">
+        <div class="container">
+            <div class="col-xs-12 col-sm-4 no-padding social">
+                <ul class="link">
+                    <li class="fb pull-left"><a target="_blank" rel="nofollow" href="#" title="Facebook"></a></li>
+                    <li class="tw pull-left"><a target="_blank" rel="nofollow" href="#" title="Twitter"></a></li>
+                    <li class="googleplus pull-left"><a target="_blank" rel="nofollow" href="#" title="GooglePlus"></a></li>
+                    <li class="rss pull-left"><a target="_blank" rel="nofollow" href="#" title="RSS"></a></li>
+                    <li class="pintrest pull-left"><a target="_blank" rel="nofollow" href="#" title="PInterest"></a></li>
+                    <li class="linkedin pull-left"><a target="_blank" rel="nofollow" href="#" title="Linkedin"></a></li>
+                    <li class="youtube pull-left"><a target="_blank" rel="nofollow" href="#" title="Youtube"></a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-4 no-padding copyright"><a target="_blank" href="https://www.templateshub.net">Templates Hub</a> </div>
+            <div class="col-xs-12 col-sm-4 no-padding">
+                <div class="clearfix payment-methods">
+                    <ul>
+                        <li><img src="assets/images/payments/1.png" alt=""></li>
+                        <li><img src="assets/images/payments/2.png" alt=""></li>
+                        <li><img src="assets/images/payments/3.png" alt=""></li>
+                        <li><img src="assets/images/payments/4.png" alt=""></li>
+                        <li><img src="assets/images/payments/5.png" alt=""></li>
+                    </ul>
+                </div>
+                <!-- /.payment-methods -->
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- ============================================================= FOOTER : END============================================================= -->

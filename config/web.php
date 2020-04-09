@@ -71,7 +71,7 @@ $config = [
                 ],
                 'yii\bootstrap\BootstrapAsset' => [
                     'css' => [
-                        'bootstrap.css' => 'theme/assets/css/bootstrap/bootstrap.css'
+                        'bootstrap.css' => '/theme/assets/css/bootstrap/bootstrap.css'
                     ]
                 ]
             ]

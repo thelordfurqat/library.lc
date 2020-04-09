@@ -5,3 +5,40 @@
 .field-book-image{
     width: 50%;
 }
+
+.pull-right {
+     float: right !important;
+}
+ .checkboxcustom>input[type="checkbox"]{
+     position: relative;
+     width:60px;
+     height:30px;
+     -webkit-appearance: none;
+     background-color: #c6c6c6;
+     outline: none;
+     border-radius: 15px;
+     box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+     transition: .5s;
+ }
+.checkboxcustom>input:checked[type="checkbox"]{
+    background-color: #03a9f4;
+}
+.checkboxcustom>input[type="checkbox"]:before{
+    content: '';
+    position: absolute;
+    width:30px;
+    height:30px;
+    border-radius: 15px;
+    top:0;
+    left:0;
+    background-color: #fff;
+    transform: scale(1.1);
+    box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    transition: .5s;
+}
+.checkboxcustom>input:checked[type="checkbox"]:before{
+    left:30px;
+}
+.table td {
+    white-space: unset !important;
+}

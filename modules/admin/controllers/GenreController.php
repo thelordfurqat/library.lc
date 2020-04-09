@@ -5,6 +5,7 @@ namespace app\modules\admin\controllers;
 use Yii;
 use app\models\Genre;
 use app\models\search\GenreSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,10 +21,19 @@ class GenreController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->identity->role->role=='Admin',
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -37,6 +47,7 @@ class GenreController extends Controller
     {
         $searchModel = new GenreSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->setPagination(['pageSize'=>20]);
         $model=new Genre();
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -55,6 +66,9 @@ class GenreController extends Controller
      */
     public function actionView($id)
     {
+        $model=$this->findModel($id);
+        $model->count=sizeof($model->books);
+        $model->save();
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);

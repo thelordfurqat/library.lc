@@ -2,11 +2,14 @@
 
 namespace app\modules\admin\controllers;
 
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Yii;
 use app\models\User;
 use app\models\search\UserSearch;
+use yii\filters\AccessControl;
 use yii\helpers\Console;
 use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -21,10 +24,28 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
+                    [
+                        'allow'=>(!Yii::$app->user->isGuest && Yii::$app->user->identity->role->role=='Muharrir') || (!Yii::$app->user->isGuest && Yii::$app->user->identity->role->role=='Admin'),
+                        'actions'=>['view','update','delete','getregion','getdistrict',],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow'=>!Yii::$app->user->isGuest && Yii::$app->user->identity->role->role=='Admin',
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -53,6 +74,9 @@ class UserController extends Controller
      */
     public function actionView($id)
     {
+        if(Yii::$app->user->identity->role->role=='Muharrir' && Yii::$app->user->identity->id!=$id) {
+            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+        }
         $model = $this->findModel($id);
         $oldPass=$model->password;
         $oldImage=$model->image;
@@ -101,6 +125,9 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
+        if(Yii::$app->user->identity->role->role=='Muharrir' && Yii::$app->user->identity->id!=$id) {
+            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+        }
         $model = $this->findModel($id);
         $oldPass=$model->password;
         $oldImage=$model->image;
@@ -127,6 +154,9 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
+        if(Yii::$app->user->identity->role->role=='Muharrir' && Yii::$app->user->identity->id!=$id) {
+            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+        }
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);

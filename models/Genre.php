@@ -52,6 +52,8 @@ class Genre extends \yii\db\ActiveRecord
      */
     public function getBooks()
     {
-        return Book::find()->filterWhere(['like','genres','%"'.$this->id.'"%'])->all();
+        return Book::find()->filterWhere(['like','genres','"'.$this->id.'"'])->all();
+
+//        return Book::find()->filterWhere(['like','genres','%"'.$this->id.'"%'])->all();
     }
 }

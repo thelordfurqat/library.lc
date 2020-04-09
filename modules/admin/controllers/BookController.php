@@ -6,10 +6,12 @@ use app\models\Author;
 use app\models\Certificate;
 use app\models\Files;
 use app\models\Genre;
+use app\models\Subject;
 use Faker\Provider\File;
 use Yii;
 use app\models\Book;
 use app\models\search\BookSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,10 +28,19 @@ class BookController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -43,7 +54,7 @@ class BookController extends Controller
     {
         $searchModel = new BookSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        $dataProvider->setPagination(['pageSize'=>20]);
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
@@ -136,7 +147,9 @@ class BookController extends Controller
                 foreach ($model->genres_int as $item) {
                     $genreHave=false;
                     if(intval($item)==$item){
-                        if(Genre::findOne($item)){
+                        if($dddd=Genre::findOne($item)){
+                            $dddd->count+=1;
+                            $dddd->save();
                             array_push($genres_ids,$item);
                             $genreHave=true;
                         }
@@ -157,6 +170,9 @@ class BookController extends Controller
             $model->alias=GenerateRandomUnicalAlias(Book::find());
             if(!$model->subject_id)
                 $model->subject_id=2;
+            $subject=Subject::findOne($model->subject_id);
+            $subject->count++;
+            $subject->save();
             $model->save();
 //            debug($model);
 //            exit();
@@ -218,7 +234,13 @@ class BookController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model=$this->findModel($id);
+        $model->status=-1;
+        $model->save();
+        $subject=Subject::findOne($model->subject_id);
+        $subject->count--;
+        $subject->save();
+//        $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
     }

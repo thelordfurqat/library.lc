@@ -90,6 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
             if(!$query['BookSearch']['user_id'])
                 $query['BookSearch']['user_id']=$model->id;
             $dataProvider = $searchModel->search($query);
+            $dataProvider->setPagination(['pageSize'=>20]);
 
             //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

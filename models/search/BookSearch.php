@@ -18,7 +18,7 @@ class BookSearch extends Book
     {
         return [
             [['id', 'certificator_id', 'publisher_id', 'sales', 'show_counter', 'price', 'old_price', 'arenda', 'like_counter', 'page_size', 'status', 'is_delete', 'user_id'], 'integer'],
-            [['alias', 'name', 'certificate', 'year', 'made_in', 'authors', 'code', 'shtrix_code', 'isbn_code', 'made_date', 'detail', 'size', 'muqova', 'created', 'updated', 'genre', 'subject', 'image'], 'safe'],
+            [['alias', 'name', 'certificate', 'year', 'made_in', 'authors', 'code', 'shtrix_code', 'isbn_code', 'made_date', 'detail', 'size', 'muqova', 'created', 'updated', 'genres', 'subject', 'image'], 'safe'],
         ];
     }
 
@@ -40,7 +40,7 @@ class BookSearch extends Book
      */
     public function search($params)
     {
-        $query = Book::find();
+        $query = Book::find()->where(['>','status',-1]);
 
         // add conditions that should always apply here
 
@@ -88,7 +88,7 @@ class BookSearch extends Book
             ->andFilterWhere(['like', 'detail', $this->detail])
             ->andFilterWhere(['like', 'size', $this->size])
             ->andFilterWhere(['like', 'muqova', $this->muqova])
-            ->andFilterWhere(['like', 'genre', $this->genre])
+            ->andFilterWhere(['like', 'genres', $this->genres])
             ->andFilterWhere(['like', 'subject', $this->subject])
             ->andFilterWhere(['like', 'image', $this->image]);
 
