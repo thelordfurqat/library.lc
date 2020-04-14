@@ -211,8 +211,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
 
 
-                <h4>Biror web saytga yoki sahifa(action)ga o'tishi uchun <b>-http://example.com/news
-                        (-/site/contact)</b>
+                <h4>Biror web saytga yoki sahifa(action)ga o'tishi uchun <b>-http://example.com/news </b> YOKI <b>
+                        -/site/contact-</b>
                 </h4>
             </div>
 

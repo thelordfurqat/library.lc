@@ -9,8 +9,12 @@ use app\models\Genre;
 use app\models\News;
 use app\models\Publisher;
 use app\models\Region;
+use app\models\search\BookSearch;
+use app\models\search\UserSearch;
 use app\models\Subject;
+use app\models\User;
 use Yii;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -81,11 +85,7 @@ class SiteController extends Controller
 //debug($bestAuthors);
         $best3Authors=array_slice($bestAuthors,0,4*8);
         $genres=Genre::find()->orderBy(['count'=>SORT_DESC])->limit(4*8)->all();
-        $subjects=Subject::find()->orderBy(['count'=>SORT_DESC])->limit(4*8)->all();
-        $publishers=Publisher::find()->limit(4*8)->all();
-        $regions=Region::find()->all();
         $latest_news=News::find()->where(['cat_id'=>30])->andwhere(['>','status',0])->andwhere(['>','active',0])->orderBy(['sort'=>SORT_DESC,'id'=>SORT_DESC])->limit(5)->all();
-        $partners=News::find()->where(['cat_id'=>37])->andwhere(['>','status',0])->andwhere(['>','active',0])->orderBy(['sort'=>SORT_DESC,'id'=>SORT_DESC])->limit(10)->all();
 
 //        debug($_['products']);
 //        exit();
@@ -97,13 +97,46 @@ class SiteController extends Controller
             'best3Authors'=>$best3Authors,
             'latest'=>$latest,
             'genres'=>$genres,
-            'subjects'=>$subjects,
-            'publishers'=>$publishers,
-            'regions'=>$regions,
             'latest_news'=>$latest_news,
-            'partners'=>$partners,
         ]);
     }
+
+    public function actionBooks($author=null,$genre=null,$subject=null,$publisher=null,$region=null)
+    {
+        $query = Book::find()->where(['status' => 1]);
+        if($author)
+            $query = Book::find()->where(['status' => 1])->filterWhere(['like','authors','"'.$author.'"']);
+        if($genre)
+            $query = Book::find()->where(['status' => 1])->filterWhere(['like','genres','"'.$genre.'"']);
+        if($subject)
+            $query = Book::find()->where(['status' => 1])->andWhere(['subject_id'=>$subject]);
+        if($publisher)
+            $query = Book::find()->where(['status' => 1])->andWhere(['publisher_id'=>$publisher]);
+        if($region!=null){
+            $query = 'BU JOYINI KELAJAKDA QILAMIZ';
+            debug($query);
+            exit();
+        }
+        $defaultOrder = ['created'=>SORT_DESC];
+        $searchModel = new BookSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => $defaultOrder,
+            ],
+        ]);
+
+// returns an array of Post objects
+        $model = $dataProvider->getModels();
+        return $this->render('books',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
     public function actionGetBook($code){
         if($model=Book::find()->where(['code'=>$code])->one()){
             $this->layout='empty';
@@ -115,6 +148,27 @@ class SiteController extends Controller
         else
             throw new NotFoundHttpException('Gashir soki.');
         exit();
+    }
+
+    public function actionLibraries()
+    {
+        $query = User::find()->where(['status' => 1]);
+
+        $defaultOrder = ['created'=>SORT_DESC];
+        $searchModel = new UserSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => $defaultOrder,
+            ],
+        ]);
+        return $this->render('libraries',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**

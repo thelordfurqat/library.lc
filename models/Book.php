@@ -103,7 +103,7 @@ class Book extends \yii\db\ActiveRecord
             'isbn_code' => 'ISBN',
             'made_date' => 'Chop qilingan yili',
             'like_counter' => 'Yoqdi',
-            'detail' => 'Qo\'shimcha',
+            'detail' => 'Kitob qisqacha matni',
             'page_size' => 'Betlar soni',
             'size' => 'O\'lchami',
             'muqova' => 'Muqova',

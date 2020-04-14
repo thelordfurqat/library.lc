@@ -1,13 +1,15 @@
 <?php
 
 use buttflattery\formwizard\FormWizard;
+use kartik\date\DatePicker;
 use yii\bootstrap\Tabs;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Book */
 
-$this->title = 'Qo\'shish';
+$this->title = 'Kitob qo\'shish';
 $this->params['breadcrumbs'][] = ['label' => 'Kitoblar', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -23,12 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
             <div class="card-body">
-                <?
-//                Yii::$app->layout='empty';
-                ?>
-                <?= $this->render('_form', [
-                    'model' => $model,
-                ]) ?>
+                <?=$this->render('_form',[
+                        'model'=>$model
+                ])?>
             </div>
         </div>
     </div>

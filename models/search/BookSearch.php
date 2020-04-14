@@ -41,6 +41,8 @@ class BookSearch extends Book
     public function search($params)
     {
         $query = Book::find()->where(['>','status',-1]);
+        if(\Yii::$app->user->identity->role->role!='Admin')
+            $query = Book::find()->where(['>','status',-1])->andWhere(['user_id'=>\Yii::$app->user->id]);
 
         // add conditions that should always apply here
 

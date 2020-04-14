@@ -36,7 +36,7 @@ class Files extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['code','book_id','files'], 'required'],
+            [['book_id',], 'required'],
             [['preview', 'detail'], 'string'],
             [['book_id', 'is_delete', 'status'], 'integer'],
             [['created', 'updated'], 'safe'],
@@ -54,8 +54,9 @@ class Files extends \yii\db\ActiveRecord
         return [
             'id' => 'Id',
             'code' => 'Kod',
+            'files'=>'Fayllar',
             'preview' => 'Qisqacha',
-            'detail' => 'Qo\'shimcha',
+            'detail' => 'Kitob qisqacha matni',
             'book_id' => 'Kitob',
             'created' => 'Yaratildi',
             'updated' => 'Yangilandi',

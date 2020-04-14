@@ -36,16 +36,26 @@ AppAsset::register($this);
 
         }
     </script>
-
+    <script>
+        add_to_card=function (code) {
+            alert(code);
+        };
+        add_to_wishlist=function (code) {
+            alert(code);
+        }
+    </script>
     <?php $this->head() ?>
 </head>
 <body>
 <?php $this->beginBody() ?>
 
 <?=$this->render('_header')?>
-
+<?if(!(Yii::$app->controller->id=='site' && Yii::$app->controller->action=='index'))
+    echo $this->render('_breadcrumb');
+    ?>
 
 <?=$content ?>
+<?=$this->render('_partners'); ?>
 <?=$this->render('_footer'); ?>
 
 

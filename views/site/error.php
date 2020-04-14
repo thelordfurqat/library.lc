@@ -8,20 +8,25 @@
 use yii\helpers\Html;
 
 $this->title = $name;
+$s=Html::encode($this->title);
 ?>
-<div class="site-error">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
-    </div>
-
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid architecto debitis exercitationem facere in incidunt maxime omnis repellat tempora vel.
-    </p>
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
-
-</div>
+<!-- ============================================== HEADER : END ============================================== -->
+<div class="body-content outer-top-bd">
+    <div class="container">
+        <div class="x-page inner-bottom-sm">
+            <div class="row">
+                <div class="col-md-12 x-text text-center">
+                    <h1> <?= mb_substr($s,sizeof($s)-5,sizeof($s)+2,'utf8')  ?></h1>
+                    <p> <?= nl2br(Html::encode($message)) ?> </p>
+                    <form role="form" method="get" action="/site/search" class="outer-top-vs outer-bottom-xs">
+                        <input placeholder="Kalit so`z" name="search-text" autocomplete="off">
+                        <button class="  btn-default le-button">Qidirish</button>
+                    </form>
+                    <a href="/"><i class="fa fa-home"></i> Bosh sahifaga qaytish</a>
+                </div>
+            </div><!-- /.row -->
+        </div><!-- /.sigin-in-->
+    </div><!-- /.container -->
+</div><!-- /.body-content -->
+<!-- ============================================================= FOOTER ============================================================= -->

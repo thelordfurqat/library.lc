@@ -16,14 +16,7 @@ $carusel2 = \app\models\Adds::find()->where(['type' => 'carusel2'])->andWhere(['
 $home1 = \app\models\Adds::find()->where(['type' => 'home1'])->andWhere(['status' => 1])->orderBy(['oder' => SORT_DESC])->limit(3)->all();
 $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status' => 1])->orderBy(['oder' => SORT_DESC])->limit(3)->all();
 ?>
-<script>
-    add_to_card=function (code) {
-        alert(code);
-    };
-    add_to_wishlist=function (code) {
-        alert(code);
-    }
-</script>
+
 <!-- ============================================== HEADER : END ============================================== -->
 <div class="body-content outer-top-vs" id="top-banner-and-menu">
     <div class="container">
@@ -31,267 +24,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
             <!-- ============================================== SIDEBAR ============================================== -->
             <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
 
-                <!-- ================================== TOP NAVIGATION ================================== -->
-                <div class="side-menu animate-dropdown outer-bottom-xs">
-                    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Qandaydir so'z</div>
-                    <nav class="yamm megamenu-horizontal">
-                        <ul class="nav">
-                            <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-heart" aria-hidden="true"></i>Sevimli kitoblar</a>
-                                <ul class="dropdown-menu mega-menu" style="min-width: fit-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($mostliked)/8))
-                                            $class=(int)(12/(sizeof($mostliked)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($mostliked as $i=>$item) :
-                                                        if(!(($i)%8) && $i):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                            <?endif;?>
-                                                        <li><a href="<?=Url::to(['/site/bookview','code'=>$item->code])?>"><?=$item->name?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-                            <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-eye" aria-hidden="true"></i>Ko'p ko'rilgan kitoblar</a>
-                                <ul class="dropdown-menu mega-menu"  style="min-width: max-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($mostviewed)/8))
-                                                $class=(int)(12/(sizeof($mostviewed)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($mostviewed as $i=>$item) :
-                                                    if(!(($i)%8) && $i):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                            <?endif;?>
-                                                        <li><a href="<?=Url::to(['/site/bookview','code'=>$item->code])?>"><?=$item->name?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-                            <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-shopping-bag" aria-hidden="true"></i>Ko'p sotilgan kitoblar</a>
-                                <ul class="dropdown-menu mega-menu"  style="min-width: max-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($mostseled)/8))
-                                                $class=(int)(12/(sizeof($mostseled)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($mostseled as $i=>$item) :
-                                                    if(!(($i)%8) && $i):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?endif;?>
-                                                    <li><a href="<?=Url::to(['/site/bookview','code'=>$item->code])?>"><?=$item->name?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-                            <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-clock-o" aria-hidden="true"></i>Eng yangi kitoblar</a>
-                                <ul class="dropdown-menu mega-menu"  style="min-width: max-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($latest)/8))
-                                                $class=(int)(12/(sizeof($latest)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($latest as $i=>$item) :
-                                                    if(!(($i+1)%8)):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?endif;?>
-                                                    <li><a href="<?=Url::to(['/site/bookview','code'=>$item->code])?>"><?=$item->name?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-                           <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-bookmark" aria-hidden="true"></i>Janrlar</a>
-                                <ul class="dropdown-menu mega-menu"  style="min-width: max-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($genres)/8))
-                                                $class=(int)(12/(sizeof($genres)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($genres as $i=>$item) :
-                                                    if(!(($i)%8) && $i):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?endif;?>
-                                                    <li><a href="<?=Url::to(['/site/books','genre'=>$item->name])?>"><?=$item->name?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-                           <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-book" aria-hidden="true"></i>Fanlar</a>
-                                <ul class="dropdown-menu mega-menu"  style="min-width: max-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($subjects)/8))
-                                                $class=(int)(12/(sizeof($subjects)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($subjects as $i=>$item) :
-                                                    if(!(($i+1)%8)):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?endif;?>
-                                                    <li><a href="<?=Url::to(['/site/books','subject'=>$item->name])?>"><?=$item->name?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-                           <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-building" aria-hidden="true"></i>Nashriyotlar</a>
-                                <ul class="dropdown-menu mega-menu"  style="min-width: max-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($publishers)/8))
-                                                $class=(int)(12/(sizeof($publishers)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($publishers as $i=>$item) :
-                                                    if(!(($i+1)%8)):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?endif;?>
-                                                    <li><a href="<?=Url::to(['/site/books','publisher'=>$item->name])?>"><?=$item->name?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-                           <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-map-marker" aria-hidden="true"></i>Viloyatlar</a>
-                                <ul class="dropdown-menu mega-menu" style="min-width: max-content">
-                                    <li class="yamm-content">
-                                        <div class="row">
-                                            <?if((int)(sizeof($regions)/8))
-                                                $class=(int)(12/(sizeof($regions)/8));
-                                            else $class=12;?>
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?
-
-                                                    foreach ($regions as $i=>$item) :
-                                                    if(!(($i)%8) && $i!=0):?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-12 col-md-<?=$class?>">
-                                                <ul class="links list-unstyled">
-                                                    <?endif;?>
-                                                    <li><a href="<?=Url::to(['/site/books','region'=>$item->name_lat])?>"><?=$item->name_lat?></a></li>
-                                                    <?endforeach;?>
-                                                </ul>
-                                            </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-                                    </li>
-                                    <!-- /.yamm-content -->
-                                </ul>
-                            </li>
-                            <!-- /.menu-item -->
-
-                        </ul>
-                        <!-- /.nav -->
-                    </nav>
-                    <!-- /.megamenu-horizontal -->
-                </div>
-                <!-- /.side-menu -->
-                <!-- ================================== TOP NAVIGATION : END ================================== -->
+                <?=$this->render('_quick_categories')?>
 
 
 
@@ -305,6 +38,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
 
                 <div id="hero">
                     <div id="owl-main" class="owl-carousel owl-inner-nav owl-ui-sm">
+                        <?if($carusel1):?>
                         <div class="item" style="background-image: url(/adds/<?=$carusel1->image?>);">
                             <div class="container-fluid">
                                 <div class="caption bg-color vertical-center text-left">
@@ -318,7 +52,8 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                             <!-- /.container-fluid -->
                         </div>
                         <!-- /.item -->
-
+                        <?endif;?>
+                        <?if($carusel2):?>
                         <div class="item" style="background-image: url(/adds/<?=$carusel2->image?>);">
                             <div class="container-fluid">
                                 <div class="caption bg-color vertical-center text-left">
@@ -332,7 +67,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                             <!-- /.container-fluid -->
                         </div>
                         <!-- /.item -->
-
+                        <?endif;?>
                     </div>
                     <!-- /.owl-carousel -->
                 </div>
@@ -371,56 +106,28 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                             <div class="owl-carousel home-owl-carousel custom-carousel owl-theme">
                                 <?foreach($latest as $key=>$item):
                                     $url=Url::to(['/site/bookview','code'=>$item->code]);
+                                    $status='';
+                                    $date1 = new DateTime($item->created);
+                                    $date2 = new DateTime('now'.' UTC +5');
+                                    $diff = $date2->diff($date1);
+                                    if($diff->days<=7){
+                                        $status='New';
+                                        $class='new';
+                                    }
+                                    elseif($item->show_counter>=100){
+                                        $status='Top';
+                                        $class='sale';
+                                    }
+                                    elseif($item->sales>=100){
+                                        $status='Hot';
+                                        $class='hot';
+                                    }
                                 if($key>=6)
                                     break;
                                 ?>
 
                                 <div class="item item-carousel">
-                                    <div class="products">
-                                        <div class="product">
-                                            <div class="product-image">
-                                                <div class="image">
-                                                    <a href="<?=$url?>">
-                                                        <img src="/book-images/<?=$item->image?>" alt="">
-                                                    </a>
-                                                </div>
-                                                <!-- /.image -->
-
-                                                <div class="tag new"><span>Yangi</span></div>
-                                            </div>
-                                            <!-- /.product-image -->
-
-                                            <div class="product-info text-left">
-                                                <h3 class="name"><a href="<?=$url?>"><?=$item->name?></a></h3>
-<!--                                                <div class="rating rateit-small"></div>-->
-                                                <div class="description"><?=getAuthors($item->authors)?></div>
-                                                <div class="product-price"> <span class="price" <?=$item->price?'':'style="color: green"'?>> <?=$item->price?$item->price.' so`m':'Bepul'?></span> <?=$item->old_price?'<span style="color: #8c0615 !important;" class="price-before-discount">'.$item->old_price.' so`m</span>':''?> </div>
-                                                <!-- /.product-price -->
-
-                                            </div>
-                                            <!-- /.product-info -->
-                                            <div class="cart clearfix animate-effect">
-                                                <div class="action">
-                                                    <ul class="list-unstyled">
-                                                        <li class="add-cart-button btn-group">
-                                                            <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Savatga"> <i class="fa fa-shopping-cart"></i> </button>
-                                                            <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Savatga</button>
-                                                        </li>
-                                                        <li class="add-cart-button btn-group">
-                                                            <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>
-                                                            <button onclick="add_to_wishlist('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Saralanganlarga</button>
-                                                        </li>
-                                                        <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="<?=$url?>" title="Ko`rish"> <i class="fa fa-eye" aria-hidden="true"></i> </a> </li>
-                                                    </ul>
-                                                </div>
-                                                <!-- /.action -->
-                                            </div>
-                                            <!-- /.cart -->
-                                        </div>
-                                        <!-- /.product -->
-
-                                    </div>
-                                    <!-- /.products -->
+                                    <?=$this->render('_product',['item'=>$item])?>
                                 </div>
                                 <!-- /.item -->
                                 <?endforeach;?>
@@ -445,50 +152,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                                     ?>
 
                                     <div class="item item-carousel">
-                                        <div class="products">
-                                            <div class="product">
-                                                <div class="product-image">
-                                                    <div class="image">
-                                                        <a href="<?=$url?>">
-                                                            <img src="/book-images/<?=$item->image?>" alt="">
-                                                        </a>
-                                                    </div>
-                                                    <!-- /.image -->
-
-                                                    <div class="tag new"><span>Yangi</span></div>
-                                                </div>
-                                                <!-- /.product-image -->
-
-                                                <div class="product-info text-left">
-                                                    <h3 class="name"><a href="<?=$url?>"><?=$item->name?></a></h3>
-                                                    <!--                                                <div class="rating rateit-small"></div>-->
-                                                    <div class="description"><?=getAuthors($item->authors)?></div>
-                                                    <div class="product-price"> <span class="price" <?=$item->price?'':'style="color: green"'?>> <?=$item->price?$item->price.' so`m':'Bepul'?></span> <?=$item->old_price?'<span style="color: #8c0615 !important;" class="price-before-discount">'.$item->old_price.' so`m</span>':''?> </div>
-                                                    <!-- /.product-price -->
-
-                                                </div>
-                                                <!-- /.product-info -->
-                                                <div class="cart clearfix animate-effect">
-                                                    <div class="action">
-                                                        <ul class="list-unstyled">
-                                                            <li class="add-cart-button btn-group">
-                                                                <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Savatga"> <i class="fa fa-shopping-cart"></i> </button>
-                                                                <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Savatga</button>
-                                                            </li>
-                                                            <li class="add-cart-button btn-group">
-                                                                <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>
-                                                                <button onclick="add_to_wishlist('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Saralanganlarga</button>
-                                                            </li>
-                                                            <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="<?=$url?>" title="Ko`rish"> <i class="fa fa-eye" aria-hidden="true"></i> </a> </li>
-                                                        </ul>
-                                                    </div>
-                                                    <!-- /.action -->
-                                                </div>
-                                                <!-- /.cart -->
-                                            </div>
-                                            <!-- /.product -->
-
-                                        </div>
+                                        <?=$this->render('_product',['item'=>$item])?>
                                         <!-- /.products -->
                                     </div>
                                     <!-- /.item -->
@@ -515,50 +179,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                                         ?>
 
                                         <div class="item item-carousel">
-                                            <div class="products">
-                                                <div class="product">
-                                                    <div class="product-image">
-                                                        <div class="image">
-                                                            <a href="<?=$url?>">
-                                                                <img src="/book-images/<?=$item->image?>" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <!-- /.image -->
-
-                                                        <div class="tag new"><span>Yangi</span></div>
-                                                    </div>
-                                                    <!-- /.product-image -->
-
-                                                    <div class="product-info text-left">
-                                                        <h3 class="name"><a href="<?=$url?>"><?=$item->name?></a></h3>
-                                                        <!--                                                <div class="rating rateit-small"></div>-->
-                                                        <div class="description"><?=getAuthors($item->authors)?></div>
-                                                        <div class="product-price"> <span class="price" <?=$item->price?'':'style="color: green"'?>> <?=$item->price?$item->price.' so`m':'Bepul'?></span> <?=$item->old_price?'<span style="color: #8c0615 !important;" class="price-before-discount">'.$item->old_price.' so`m</span>':''?> </div>
-                                                        <!-- /.product-price -->
-
-                                                    </div>
-                                                    <!-- /.product-info -->
-                                                    <div class="cart clearfix animate-effect">
-                                                        <div class="action">
-                                                            <ul class="list-unstyled">
-                                                                <li class="add-cart-button btn-group">
-                                                                    <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Savatga"> <i class="fa fa-shopping-cart"></i> </button>
-                                                                    <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Savatga</button>
-                                                                </li>
-                                                                <li class="add-cart-button btn-group">
-                                                                    <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>
-                                                                    <button onclick="add_to_wishlist('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Saralanganlarga</button>
-                                                                </li>
-                                                                <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="<?=$url?>" title="Ko`rish"> <i class="fa fa-eye" aria-hidden="true"></i> </a> </li>
-                                                            </ul>
-                                                        </div>
-                                                        <!-- /.action -->
-                                                    </div>
-                                                    <!-- /.cart -->
-                                                </div>
-                                                <!-- /.product -->
-
-                                            </div>
+                                            <?=$this->render('_product',['item'=>$item])?>
                                             <!-- /.products -->
                                         </div>
                                         <!-- /.item -->
@@ -585,50 +206,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                                         ?>
 
                                         <div class="item item-carousel">
-                                            <div class="products">
-                                                <div class="product">
-                                                    <div class="product-image">
-                                                        <div class="image">
-                                                            <a href="<?=$url?>">
-                                                                <img src="/book-images/<?=$item->image?>" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <!-- /.image -->
-
-                                                        <div class="tag new"><span>Yangi</span></div>
-                                                    </div>
-                                                    <!-- /.product-image -->
-
-                                                    <div class="product-info text-left">
-                                                        <h3 class="name"><a href="<?=$url?>"><?=$item->name?></a></h3>
-                                                        <!--                                                <div class="rating rateit-small"></div>-->
-                                                        <div class="description"><?=getAuthors($item->authors)?></div>
-                                                        <div class="product-price"> <span class="price" <?=$item->price?'':'style="color: green"'?>> <?=$item->price?$item->price.' so`m':'Bepul'?></span> <?=$item->old_price?'<span style="color: #8c0615 !important;" class="price-before-discount">'.$item->old_price.' so`m</span>':''?> </div>
-                                                        <!-- /.product-price -->
-
-                                                    </div>
-                                                    <!-- /.product-info -->
-                                                    <div class="cart clearfix animate-effect">
-                                                        <div class="action">
-                                                            <ul class="list-unstyled">
-                                                                <li class="add-cart-button btn-group">
-                                                                    <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Savatga"> <i class="fa fa-shopping-cart"></i> </button>
-                                                                    <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Savatga</button>
-                                                                </li>
-                                                                <li class="add-cart-button btn-group">
-                                                                    <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>
-                                                                    <button onclick="add_to_wishlist('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Saralanganlarga</button>
-                                                                </li>
-                                                                <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="<?=$url?>" title="Ko`rish"> <i class="fa fa-eye" aria-hidden="true"></i> </a> </li>
-                                                            </ul>
-                                                        </div>
-                                                        <!-- /.action -->
-                                                    </div>
-                                                    <!-- /.cart -->
-                                                </div>
-                                                <!-- /.product -->
-
-                                            </div>
+                                            <?=$this->render('_product',['item'=>$item])?>
                                             <!-- /.products -->
                                         </div>
                                         <!-- /.item -->
@@ -690,50 +268,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                                 ?>
 
                                 <div class="item item-carousel">
-                                    <div class="products">
-                                        <div class="product">
-                                            <div class="product-image">
-                                                <div class="image">
-                                                    <a href="<?=$url?>">
-                                                        <img src="/book-images/<?=$item->image?>" alt="">
-                                                    </a>
-                                                </div>
-                                                <!-- /.image -->
-
-                                                <div class="tag sale"><span>Top</span></div>
-                                            </div>
-                                            <!-- /.product-image -->
-
-                                            <div class="product-info text-left">
-                                                <h3 class="name"><a href="<?=$url?>"><?=$item->name?></a></h3>
-                                                <!--                                                <div class="rating rateit-small"></div>-->
-                                                <div class="description"><?=getAuthors($item->authors)?></div>
-                                                <div class="product-price"> <span class="price" <?=$item->price?'':'style="color: green"'?>> <?=$item->price?$item->price.' so`m':'Bepul'?></span> <?=$item->old_price?'<span style="color: #8c0615 !important;" class="price-before-discount">'.$item->old_price.' so`m</span>':''?> </div>
-                                                <!-- /.product-price -->
-
-                                            </div>
-                                            <!-- /.product-info -->
-                                            <div class="cart clearfix animate-effect">
-                                                <div class="action">
-                                                    <ul class="list-unstyled">
-                                                        <li class="add-cart-button btn-group">
-                                                            <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Savatga"> <i class="fa fa-shopping-cart"></i> </button>
-                                                            <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Savatga</button>
-                                                        </li>
-                                                        <li class="add-cart-button btn-group">
-                                                            <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>
-                                                            <button onclick="add_to_wishlist('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Saralanganlarga</button>
-                                                        </li>
-                                                        <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="<?=$url?>" title="Ko`rish"> <i class="fa fa-eye" aria-hidden="true"></i> </a> </li>
-                                                    </ul>
-                                                </div>
-                                                <!-- /.action -->
-                                            </div>
-                                            <!-- /.cart -->
-                                        </div>
-                                        <!-- /.product -->
-
-                                    </div>
+                                    <?=$this->render('_product',['item'=>$item])?>
                                     <!-- /.products -->
                                 </div>
                                 <!-- /.item -->
@@ -787,7 +322,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                                 <!-- /.blog-post-image -->
 
                                 <div class="blog-post-info text-left">
-                                    <h3 class="name"><a href="#"><?=mb_substr($item->name,0,43,'utf8')?><?=strlen($item->name)>43?'...':''?></a></h3>
+                                    <h3 class="name"><a href="<?=$url?>"><?=mb_substr($item->name,0,43,'utf8')?><?=strlen($item->name)>43?'...':''?></a></h3>
                                     <span class="info"><?=$item->author->name?> &nbsp;|&nbsp; <?= Yii::$app->formatter->asDate($item->created);?> </span>
                                     <p class="text"><?=mb_substr(strip_tags($item->preview),0,180,'utf8')?><?=strlen(strip_tags($item->preview))>180?'...':''?></p>
                                 </div>
@@ -817,50 +352,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                         ?>
 
                         <div class="item item-carousel">
-                            <div class="products">
-                                <div class="product">
-                                    <div class="product-image">
-                                        <div class="image">
-                                            <a href="<?=$url?>">
-                                                <img src="/book-images/<?=$item->image?>" alt="">
-                                            </a>
-                                        </div>
-                                        <!-- /.image -->
-
-                                        <div class="tag hot"><span>Hot</span></div>
-                                    </div>
-                                    <!-- /.product-image -->
-
-                                    <div class="product-info text-left">
-                                        <h3 class="name"><a href="<?=$url?>"><?=$item->name?></a></h3>
-                                        <!--                                                <div class="rating rateit-small"></div>-->
-                                        <div class="description"><?=getAuthors($item->authors)?></div>
-                                        <div class="product-price"> <span class="price" <?=$item->price?'':'style="color: green"'?>> <?=$item->price?$item->price.' so`m':'Bepul'?></span> <?=$item->old_price?'<span style="color: #8c0615 !important;" class="price-before-discount">'.$item->old_price.' so`m</span>':''?> </div>
-                                        <!-- /.product-price -->
-
-                                    </div>
-                                    <!-- /.product-info -->
-                                    <div class="cart clearfix animate-effect">
-                                        <div class="action">
-                                            <ul class="list-unstyled">
-                                                <li class="add-cart-button btn-group">
-                                                    <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Savatga"> <i class="fa fa-shopping-cart"></i> </button>
-                                                    <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Savatga</button>
-                                                </li>
-                                                <li class="add-cart-button btn-group">
-                                                    <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>
-                                                    <button onclick="add_to_wishlist('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Saralanganlarga</button>
-                                                </li>
-                                                <li class="lnk"> <a data-toggle="tooltip" class="add-to-cart" href="<?=$url?>" title="Ko`rish"> <i class="fa fa-eye" aria-hidden="true"></i> </a> </li>
-                                            </ul>
-                                        </div>
-                                        <!-- /.action -->
-                                    </div>
-                                    <!-- /.cart -->
-                                </div>
-                                <!-- /.product -->
-
-                            </div>
+                            <?=$this->render('_product',['item'=>$item])?>
                             <!-- /.products -->
                         </div>
                         <!-- /.item -->
@@ -876,24 +368,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
         </div>
         <!-- /.homebanner-holder -->
         <!-- ============================================== CONTENT : END ============================================== -->
-        <!-- ============================================== BRANDS CAROUSEL ============================================== -->
-        <div id="brands-carousel" class="logo-slider">
-            <div class="logo-slider-inner">
-                <div id="brand-slider" class="owl-carousel brand-slider custom-carousel owl-theme">
-                    <?foreach ($partners as $item):
-                        $url=Url::to(['/site/view','code'=>$item->code]);
-                        ?>
-                    <div class="item m-t-15"> <a href="<?=$url?>" class="image"> <img data-echo="/uploads/<?=$item->image?>" src="/uploads/<?=$item->image?>" title="<?=$item->name?>" alt=""> </a> </div>
-                    <?endforeach;?>
-                    <!--/.item-->
-                </div>
-                <!-- /.owl-carousel #logo-slider -->
-            </div>
-            <!-- /.logo-slider-inner -->
 
-        </div>
-        <!-- /.logo-slider -->
-        <!-- ============================================== BRANDS CAROUSEL : END ============================================== -->
     </div>
     <!-- /.container -->
 </div>

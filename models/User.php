@@ -216,4 +216,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return Yii::$app->getSecurity()->validatePassword($password,$this->password);
     }
 
+    public function getBooks_count()
+    {
+        return \app\models\Book::find()->where(['status' => 1])->andwhere(['user_id'=>$this->id])->count();
+    }
+
+    public function getNew_books_count()
+    {
+        return \app\models\Book::find()->where(['status' => 1])->andwhere(['user_id'=>$this->id])->andWhere(['>','created',date("Y-m-d", strtotime("-7 day"))])->count();
+    }
+
 }

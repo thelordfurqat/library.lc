@@ -39,6 +39,7 @@ class BackAsset extends AssetBundle
         'theme/assets/vendor/chart.js/dist/Chart.min.js',
         'theme/assets/vendor/chart.js/dist/Chart.extension.js',
         'theme/assets/js/argon.js?v=1.2.0',
+//        'js/myjs.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',

@@ -114,9 +114,11 @@ class FilesController extends Controller
      */
     public function actionDelete($id)
     {
+        $data = Files::findOne($id);
+//        unlink(Yii::$app->basePath . '/web/' . $data->files);
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/admin/book/view','id'=>$data->book_id]);
     }
 
     /**

@@ -129,11 +129,11 @@ if(Yii::$app->controller->id=='book') {
                                                 '<span class="fa fa-eye"></span>',
                                                 $url).'<br>';
                                     },
-                                    'update' => function ($url,$model) {
-                                        return Html::a(
-                                                '<span class="fa fa-edit"></span>',
-                                                $url).'<br>';
-                                    },
+//                                    'update' => function ($url,$model) {
+//                                        return Html::a(
+//                                                '<span class="fa fa-edit"></span>',
+//                                                $url).'<br>';
+//                                    },
                                     'delete' => function ($url,$model) {
                                         return Html::a(
                                             '<span class="fa fa-trash"></span>',
