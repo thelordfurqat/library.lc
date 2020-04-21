@@ -62,19 +62,20 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
     <div class="col-xl-8 order-xl-1">
         <!--        --><?//=$this->red('update')?>
-        <?php
+       <?php
         $searchModel = new BookSearch();
         $query=Yii::$app->request->queryParams;
         if(!$query['BookSearch']['subject_id'])
-            $query['BookSearch']['subject_id']=$model->id;
+        $query['BookSearch']['subject_id']=$model->id;
         $dataProvider = $searchModel->search($query);
+        $dataProvider->setPagination(['pageSize'=>20]);
 
         //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         echo $this->render(Yii::$app->urlManager->createUrl(['/book/index']), [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'subject_id'=>$model->id,
+        'searchModel' => $searchModel,
+        'dataProvider' => $dataProvider,
+        'subject_id'=>$model->id,
         ]);
         ?>
     </div>

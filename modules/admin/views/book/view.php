@@ -160,6 +160,14 @@ Modal::end();
                         'attributes' => [
 //            'id',
 //            'alias',
+                            [
+                                'attribute'=>'arenda',
+                                'value'=>function($x){
+                                    if($x->arenda)
+                                        return 'Elektron';
+                                    return 'Bosma';
+                                }
+                            ],
 //                            'name',
                             'price',
                             'old_price',
@@ -188,14 +196,7 @@ Modal::end();
 //                            'code',
 //                            'show_counter',
 //                            'arenda',
-                            [
-                                'attribute'=>'arenda',
-                                'value'=>function($x){
-                                    if($x->arenda)
-                                        return 'Ha';
-                                    return 'Yo\'q';
-                                }
-                            ],
+
                             'shtrix_code',
                             'isbn_code',
                             'made_date',

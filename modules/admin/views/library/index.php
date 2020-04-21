@@ -1,42 +1,15 @@
 <?php
 
-use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\SubjectSearch */
+/* @var $searchModel app\models\search\LibrarySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Fanlar';
+$this->title = 'Kutubxonalar';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<script>
-    var ganreapdate = function(){}
-</script>
-
-<?php
-Modal::begin([
-
-    'id'=>'addsubject',
-    'size'=>'modal-dialog-centered',
-    'options'=>['class'=>'modal fade'],
-//    'diologOptions'=>['class'=>'modal-dialog modal-dialog-centered'],
-    'bodyOptions' => ['class' => 'modal-body'],
-    'headerOptions' => ['class' => 'modal-header','style'=>'display:none'],
-    'closeButton' => [
-        'id'=>'close-button',
-        'class'=>'close',
-        'data-dismiss' =>'modal',
-    ],
-
-]);
-
-echo $this->render('_form',['model'=>new \app\models\Subject()]);
-Modal::end();
-?>
-
 
 <div class="row">
     <div class="col-xl-12 order-xl-1">
@@ -47,10 +20,7 @@ Modal::end();
                         <h3 class="mb-0"><?= Html::encode($this->title) ?></h3>
                     </div>
                     <div class="col-4 text-right">
-                        <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addsubject">
-                            Fan qo'shish
-                        </button>
-                        <!--                        --><?//= Html::a('Janr qo\'shish', ['create'], ['class' => 'btn btn-sm btn-primary']) ?>
+                        <?= Html::a('Kutubxona qo\'shish', ['create'], ['class' => 'btn btn-sm btn-primary']) ?>
                     </div>
 
 
@@ -70,13 +40,40 @@ Modal::end();
 
                         'columns' => [
                             ['class' => 'yii\grid\SerialColumn'],
-
+//                            'id',
+//                            'code',
+//                            'name',
+//                            'bank_id',
+//                            'bank_account_number',
+                            //'oked',
+                            //'inn',
+                            //'country_id',
+                            //'region_id',
+                            //'district_id',
+                            //'phone',
+                            //'fax',
+                            //'telegram_channel',
+                            //'chat_id',
+                            //'director',
+                            //'buxgalter',
+                            //'email:email',
+                            //'created',
+                            //'updated',
+                            //'status',
+                            //'setting:ntext',
+                            //'image',
+                            //'telegram_username',
+                            //'instagram',
+//            'id',
+//                        'name',
                             [
                                 'attribute'=>'name',
                                 'value'=>function($x){return '<div class="media align-items-center">
-                                
+                                <a href="'.Yii::$app->urlManager->createUrl(['/admin/library/view','id'=>$x->id]).'" class="avatar mr-3">
+                                    <img alt="'.$x->name.'" src="'.Yii::$app->homeUrl.'library-images/'.$x->image.'">
+                                </a>
                                 <div class="media-body">
-                                <h3 class="pt-2"><a href="'.Yii::$app->urlManager->createUrl(['/admin/subject/view','id'=>$x->id]).'">
+                                <h3 class="pt-2"><a href="'.Yii::$app->urlManager->createUrl(['/admin/library/view','id'=>$x->id]).'">
                                     '.$x->name.'
                                 </a></h3>
                                     
@@ -84,8 +81,26 @@ Modal::end();
                             </div>';},
                                 'format'=>'raw'
                             ],
-                            'booksCount',
+//                        'image',
+//                        'username',
+                            //'password',
+                            //'email:email',
+                            'phone',
+//                            'address',
+                            'balans',
 
+                            //'country_id',
+                            //'region_id',
+                            //'district_id',
+                            //'address',
+                            //'created',
+                            //'updated',
+                            //'status',
+//                        'active',
+                            [
+                                'label'=>'Kitoblar',
+                                'value'=>'booksCount'
+                            ],
                             [
 
                                 'class' => 'yii\grid\ActionColumn',
@@ -97,12 +112,12 @@ Modal::end();
                                     'view' => function ($url,$model) {
                                         return Html::a(
                                                 '<span class="fa fa-eye"></span>',
-                                                $url);
+                                                $url).'<br>';
                                     },
                                     'update' => function ($url,$model) {
-                                        return Html::button(
-                                            '<span class="fa fa-edit"></span>',
-                                            ['onclick'=>'ganreapdate('.$model->id.')', 'class'=>'btn btn-link']);
+                                        return Html::a(
+                                                '<span class="fa fa-edit"></span>',
+                                                $url).'<br>';
                                     },
                                     'delete' => function ($url,$model) {
                                         return Html::a(
@@ -139,40 +154,3 @@ Modal::end();
         </div>
     </div>
 </div>
-
-<?php
-Modal::begin([
-
-    'id'=>'updatesubject',
-    'size'=>'modal-dialog-centered',
-    'options'=>['class'=>'modal fade'],
-//    'diologOptions'=>['class'=>'modal-dialog modal-dialog-centered'],
-    'bodyOptions' => ['class' => 'modal-body','id'=>'updatesubjectbody'],
-    'headerOptions' => ['class' => 'modal-header','style'=>'display:none'],
-    'closeButton' => [
-        'id'=>'close-button',
-        'class'=>'close',
-        'data-dismiss' =>'modal',
-    ],
-
-]);
-
-Modal::end();
-?>
-
-
-<?php
-$url = Yii::$app->urlManager->createUrl(['admin/subject/update']);
-
-$this->registerJs("
-  ganreapdate = function(id){
-    $.get('{$url}?id='+id).done(function(data){
-        
-        $('#updatesubjectbody').empty();
-        $('#updatesubjectbody').append(data);
-        $('#updatesubject').modal();
-    })
-  }
-    
-  ")
-?>

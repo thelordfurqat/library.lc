@@ -317,7 +317,7 @@ $home2 = \app\models\Adds::find()->where(['type' => 'home2'])->andWhere(['status
                         <div class="item">
                             <div class="blog-post">
                                 <div class="blog-post-image">
-                                    <div class="image"> <a href="<?=$url?>"><img src="/uploads/<?=$item->image?>" alt=""></a> </div>
+                                    <div class="image"> <a href="<?=$url?>"><img src="/uploads/<?=$item->image?>" style="object-fit: cover; width: 100%; height: 100%; max-height: 30rem" alt=""></a> </div>
                                 </div>
                                 <!-- /.blog-post-image -->
 

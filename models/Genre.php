@@ -52,7 +52,13 @@ class Genre extends \yii\db\ActiveRecord
      */
     public function getBooks()
     {
-        return Book::find()->filterWhere(['like','genres','"'.$this->id.'"'])->all();
+        return Book::find()->filterWhere(['like','genres','"'.$this->id.'"'])->andWhere(['>','status',0])->all();
+
+//        return Book::find()->filterWhere(['like','genres','%"'.$this->id.'"%'])->all();
+    }
+    public function getBooksCount()
+    {
+        return Book::find()->filterWhere(['like','genres','"'.$this->id.'"'])->andWhere(['>','status',0])->count();
 
 //        return Book::find()->filterWhere(['like','genres','%"'.$this->id.'"%'])->all();
     }

@@ -5,16 +5,22 @@ namespace app\controllers;
 use app\models\Adds;
 use app\models\Author;
 use app\models\Book;
+use app\models\Category;
 use app\models\Genre;
+use app\models\Library;
 use app\models\News;
 use app\models\Publisher;
 use app\models\Region;
 use app\models\search\BookSearch;
+use app\models\search\GenreSearch;
+use app\models\search\NewsSearch;
+use app\models\search\SubjectSearch;
 use app\models\search\UserSearch;
 use app\models\Subject;
 use app\models\User;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
@@ -137,8 +143,17 @@ class SiteController extends Controller
         ]);
     }
 
+    public function actionBookview($code){
+        if($code=null || !$model=Book::findOne(['code'=>$code]))
+            throw new NotFoundHttpException('Kitob topilmadi');
+        $model->show_counter++;
+        $model->save();
+        return $this->render('bookview',[
+            'model'=>$model,
+        ]);
+    }
     public function actionGetBook($code){
-        if($model=Book::find()->where(['code'=>$code])->one()){
+        if($model=Book::findOne(['code'=>$code])){
             $this->layout='empty';
             echo $this->render('_modal',[
                 'model'=>$model,
@@ -146,13 +161,12 @@ class SiteController extends Controller
 
         }
         else
-            throw new NotFoundHttpException('Gashir soki.');
-        exit();
+            throw new NotFoundHttpException('Kitob topilmadi');
     }
 
     public function actionLibraries()
     {
-        $query = User::find()->where(['status' => 1]);
+        $query = Library::find()->where(['status' => 1]);
 
         $defaultOrder = ['created'=>SORT_DESC];
         $searchModel = new UserSearch();
@@ -170,7 +184,63 @@ class SiteController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+    public function actionSubjects()
+    {
+        $query = Subject::find();
 
+        $searchModel = new SubjectSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 5,
+            ],
+
+        ]);
+        return $this->render('subjects',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionGenres()
+    {
+        foreach (Genre::find()->all() as $item) {
+            $item->count=$item->booksCount;
+            $item->save();
+        }
+        $query = Genre::find()->where(['>','count',0]);
+
+
+        $searchModel = new GenreSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 5,
+            ],
+
+        ]);
+        return $this->render('genres',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+    public function actionAuthors()
+    {
+        $query = Author::find();
+
+
+        $searchModel = new GenreSearch();
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'pagination' => [
+                'defaultPageSize' => 5,
+            ],
+
+        ]);
+        return $this->render('authors',[
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
     /**
      * Login action.
      *
@@ -235,5 +305,79 @@ class SiteController extends Controller
             exit();
         }
         return $this->render('about');
+    }
+
+
+
+    public function actionNews($code = null){
+
+        if($category = Category::findOne(['code'=>$code])){
+            $name=$category->name;
+            $query = News::find()->where(['status' => 1])->andWhere(['cat_id'=>$category->id]);
+
+            $defaultOrder = ['created'=>SORT_DESC];
+            $searchModel = new NewsSearch();
+            $dataProvider = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 10,
+                ],
+                'sort' => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+            ]);
+            if(!$dataProvider->count)
+                throw new NotFoundHttpException('Ma\'lumotlar topilmadi');
+            return $this->render('news',[
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'name'=>$name,
+            ]);
+        }
+    }
+
+    public function actionPage($code = null){
+        if($code == null){
+            throw new NotFoundHttpException();
+        }
+
+        $c = Category::findOne(['code'=>$code]);
+        $name=$c->name;
+        if($m = News::findOne(['cat_id'=>$c->id])){
+            return $this->render('page',[
+                'model'=>$m,
+                'code'=>$code,
+                'name'=>$name
+            ]);
+        }else{
+            throw new NotFoundHttpException();
+        }
+
+
+    }
+
+    public function actionSitemap(){
+
+
+        return $this->render('sitemap');
+
+    }
+
+    public function actionView($code){
+        if($code == null){
+            throw new NotFoundHttpException('Ma\'lumotlar topilmadi');
+        }
+
+        if($model = News::findOne(['code'=>$code])){
+            $model->show_counter ++;
+            $model->save();
+            return $this->render('view',[
+                'model'=>$model,
+                'code'=>$code,
+            ]);
+        }else{
+            throw new NotFoundHttpException('Ma\'lumotlar topilmadi');
+        }
+
     }
 }

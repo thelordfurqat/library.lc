@@ -48,10 +48,18 @@ class Subject extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Books]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return array|\yii\db\ActiveRecord[]
      */
     public function getBooks()
     {
-        return $this->hasMany(Book::className(), ['subject_id' => 'id']);
+//        return Book::find()->all();
+
+        return Book::find()->where(['subject_id' => $this->id])->andWhere(['>','status',0])->all();
+
+//        return $this->hasMany(Book::className(), ['subject_id' => 'id']);
+    }
+    public function getBooksCount()
+    {
+        return Book::find()->where(['subject_id' => $this->id])->andWhere(['>','status',0])->count();
     }
 }

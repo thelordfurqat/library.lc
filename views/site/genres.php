@@ -21,7 +21,7 @@ $pager= \yii\widgets\LinkPager::widget(['pagination'=>$dataProvider->pagination,
     'linkOptions'=>['class'=>'page-link'],
 
 ]);
-$this->title='Kutubxonalar';
+$this->title='Janrlar';
 $this->params['breadcrumbs'][] = $this->title;
 
 use yii\grid\GridView;
@@ -90,12 +90,33 @@ use yii\helpers\Url;
                     <div id="myTabContent" class="tab-content category-list">
                         <div class="tab-pane active " id="grid-container">
                             <div class="category-product">
-                                <?foreach ($model as $item):?>
-                                <div class="category-product-inner">
-                                    <?=$this->render('_library',['item'=>$item])?>
-                                </div>
-                                <!-- /.category-product-inner -->
-                                <?endforeach;?>
+                                <?foreach ($model as $item): if($item->booksCount):?>
+                                    <div class="category-product-inner">
+                                        <section class="section new-arriavls">
+                                            <h3 class="section-title"><?=$item->name.' ('.$item->booksCount.')'?> <small>
+                                                    <a href="<?= Url::to(['/site/books', 'genre' => $item->id]) ?>"> Barchasini ko'rish</a>
+                                                </small></h3>
+                                            <div class="owl-carousel home-owl-carousel custom-carousel owl-theme outer-top-xs">
+                                                <?foreach($item->books as $key=>$itemm):
+                                                    $url=Url::to(['/site/bookview','code'=>$itemm->code]);
+                                                    if($key>=6)
+                                                        break;
+                                                    ?>
+
+                                                    <div class="item item-carousel">
+                                                        <?=$this->render('_product',['item'=>$itemm])?>
+                                                        <!-- /.products -->
+                                                    </div>
+                                                    <!-- /.item -->
+                                                <?endforeach;?>
+                                            </div>
+                                            <!-- /.home-owl-carousel -->
+                                        </section>
+
+                                        <!--                                        --><?//=$this->render('_library',['item'=>$item])?>
+                                    </div>
+                                    <!-- /.category-product-inner -->
+                                <?endif; endforeach;?>
                             </div>
                             <!-- /.category-product -->
 

@@ -29,7 +29,7 @@ $regions=Region::find()->all();
 
 <!-- ================================== TOP NAVIGATION ================================== -->
 <div class="side-menu animate-dropdown outer-bottom-xs">
-    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Qandaydir so'z</div>
+    <div class="head"><i class="icon fa fa-align-justify fa-fw"></i> Kategoriyalar</div>
     <nav class="yamm megamenu-horizontal">
         <ul class="nav">
             <li class="dropdown menu-item"> <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon fa fa-heart" aria-hidden="true"></i>Sevimli kitoblar</a>

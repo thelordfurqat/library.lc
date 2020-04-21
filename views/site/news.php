@@ -1,4 +1,11 @@
 <?php
+$this->title = $name;
+$this->params['breadcrumbs'][] = $name;
+/* @var $model app\models\News */
+
+use yii\helpers\Url; ?>
+
+<?php
 
 $model=$dataProvider->getModels();
 if($dataProvider->getSort()->attributeOrders['created']==3)
@@ -21,12 +28,7 @@ $pager= \yii\widgets\LinkPager::widget(['pagination'=>$dataProvider->pagination,
     'linkOptions'=>['class'=>'page-link'],
 
 ]);
-$this->title='Kutubxonalar';
-$this->params['breadcrumbs'][] = $this->title;
 
-use yii\grid\GridView;
-use yii\helpers\Html;
-use yii\helpers\Url;
 
 ?>
 <div class="body-content outer-top-xs">
@@ -90,11 +92,11 @@ use yii\helpers\Url;
                     <div id="myTabContent" class="tab-content category-list">
                         <div class="tab-pane active " id="grid-container">
                             <div class="category-product">
-                                <?foreach ($model as $item):?>
-                                <div class="category-product-inner">
-                                    <?=$this->render('_library',['item'=>$item])?>
-                                </div>
-                                <!-- /.category-product-inner -->
+                                <?if(!sizeof($model)) echo 'Hech narsa topilmadi!!'; foreach ($model as $item):?>
+                                    <div class="category-product-inner">
+                                        <?=$this->render('_new',['item'=>$item])?>
+                                    </div>
+                                    <!-- /.category-product-inner -->
                                 <?endforeach;?>
                             </div>
                             <!-- /.category-product -->

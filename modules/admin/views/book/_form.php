@@ -29,11 +29,11 @@ use yii\widgets\ActiveForm;
                 ],
             ]) ?>
             <?= $form->field($model, 'price')->widget(\kartik\money\MaskMoney::class) ?>
-            <?= $form->field($model, 'arenda')->widget(\kartik\switchinput\SwitchInput::class,[
+            <?$model->arenda=1; echo $form->field($model, 'arenda')->widget(\kartik\switchinput\SwitchInput::class,[
                 'pluginOptions' => [
                     'handleWidth' => 70,
-                    'onText' => 'Beriladi',
-                    'offText' => 'Berilmaydi'
+                    'onText' => 'Elektron',
+                    'offText' => 'Bosma'
                 ],
             ]) ?>
         </div>

@@ -53,6 +53,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link <?=Yii::$app->controller->id=='library'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/library'])?>">
+                            <i class="ni ni-building text-blue"></i>
+                            <span class="nav-link-text">Kutubxonalar</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link <?=Yii::$app->controller->id=='category'?'active':''?>" href="<?=Yii::$app->urlManager->createUrl(['/admin/category'])?>">
                             <i class="ni ni-align-left-2 text-green"></i>
                             <span class="nav-link-text">Menyular</span>

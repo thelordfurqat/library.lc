@@ -98,7 +98,7 @@ class Book extends \yii\db\ActiveRecord
             'show_counter' => 'Ko\'rishlar soni',
             'price' => 'Narxi',
             'old_price' => 'Eski narxi',
-            'arenda' => 'Ijaraga beriladimi',
+            'arenda' => 'Kitob turi',
             'shtrix_code' => 'Shrix kodi',
             'isbn_code' => 'ISBN',
             'made_date' => 'Chop qilingan yili',

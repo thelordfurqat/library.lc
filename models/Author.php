@@ -71,11 +71,16 @@ class Author extends \yii\db\ActiveRecord
     /**
      * Gets query for [[Books]].
      *
-     * @return \yii\db\ActiveQuery
+     * @return array|\yii\db\ActiveRecord[]
      */
     public function getBooks()
     {
-        return Book::find()->filterWhere(['like','authors','"'.$this->id.'"'])->all();
+        return Book::find()->filterWhere(['like','authors','"'.$this->id.'"'])->andWhere(['>','status',0])->all();
+//        return Book::find()->where('like','authors',)->all();
+    }
+    public function getBooksCount()
+    {
+        return Book::find()->filterWhere(['like','authors','"'.$this->id.'"'])->andWhere(['>','status',0])->count();
 //        return Book::find()->where('like','authors',)->all();
     }
 

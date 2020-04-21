@@ -37,7 +37,7 @@ if($item->old_price>$item->price){
             <!-- /.image -->
 
             <?=$status?'<div class="tag '.$class.'"><span>'.$status.'</span></div>':''?>
-            <?=$item->arenda? '<div class="tag sale" title="Ijaraga beriladi" style="left: 14px; color: white"><span><i class="fa fa-check"></i></span></div>' :''?>
+            <?=$item->arenda? '<div class="tag new" title="Kitob turi: Elektron" style="left: 14px; color: white; font-size: 150%"><span><i class="fa fa-edge"></i></span></div>' :'<div class="tag sale" title="Kitob turi: Bosma" style="left: 14px; color: white;font-size: 150%"><span><i class="fa fa-book"></i></span></div>'?>
         </div>
         <!-- /.product-image -->
 
@@ -54,8 +54,8 @@ if($item->old_price>$item->price){
             <div class="action">
                 <ul class="list-unstyled">
                     <li class="add-cart-button btn-group">
-                        <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="Savatga"> <i class="fa fa-shopping-cart"></i> </button>
-                        <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button">Savatga</button>
+                        <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="<?=$item->arenda && !$item->price?'Yuklash':'Savatga'?>"> <i class="fa fa-<?=$item->arenda && !$item->price?'download':'shopping-cart'?>"></i> </button>
+                        <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button"><?=$item->arenda && !$item->price?'Yuklash':'Savatga'?></button>
                     </li>
                     <li class="add-cart-button btn-group">
                         <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>

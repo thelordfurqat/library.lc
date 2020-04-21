@@ -81,6 +81,14 @@ if(Yii::$app->controller->id=='book') {
                             //'publisher_id',
 //                            'authors',
                             [
+                                'attribute'=>'arenda',
+                                'value'=>function($x){
+                                    if($x->arenda)
+                                        return 'Elektron';
+                                    return 'Bosma';
+                                }
+                            ],
+                            [
                                 'attribute'=>'authors',
                                 'value'=>function($x){
                                 return getAuthors($x->authors);
