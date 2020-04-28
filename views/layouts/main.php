@@ -26,6 +26,7 @@ AppAsset::register($this);
         var statuschanger = function(){
             return 1;
         }
+
         var resetform = function(){
             return 1;
         }
@@ -37,8 +38,11 @@ AppAsset::register($this);
         }
     </script>
     <script>
-        add_to_card=function (code) {
-            alert(code);
+        add_to_card=function () {
+
+        };
+        delete_from_card=function () {
+
         };
         add_to_wishlist=function (code) {
             alert(code);
@@ -59,6 +63,28 @@ AppAsset::register($this);
 <?=$this->render('_footer'); ?>
 
 
+<?php
+$url = Yii::$app->urlManager->createUrl(['/site/add-to-card']);
+$url2 = Yii::$app->urlManager->createUrl(['/site/delete-from-card']);
+
+$this->registerJs("
+  add_to_card = function(code){
+    $.get('{$url}?code='+code).done(function(data){
+        $('#card_body').empty();
+        $('#card_body').append(data);
+    })
+  }
+  delete_from_card = function(code){
+    $.get('{$url2}?code='+code).done(function(data){
+        $('#card_body').empty();
+        $('#card_body').append(data);   
+        $('#dropdown_card').click();   
+        
+    })
+  }
+    
+  ")
+?>
 
 <?php $this->endBody() ?>
 </body>

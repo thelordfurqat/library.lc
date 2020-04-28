@@ -4,6 +4,8 @@ use app\models\Book;
 use app\models\News;
 use yii\helpers\Url;
 
+$userBalans=(int)(\app\models\User::findOne(Yii::$app->user->id)->balans);
+
 $add = \app\models\Adds::find()->where(['type' => 'onslider'])->andWhere(['status' => 1])->orderBy(['oder' => SORT_DESC])->one();
 $discounted_books = Book::find()->where(['>', 'status', 0])->andWhere(['>', 'old_price', 0])->andWhere(['>', 'old_price', 'price'])->orderBy(['updated' => SORT_DESC])->limit(3)->all();
 $latest_news = News::find()->where(['cat_id' => 30])->andwhere(['>', 'status', 0])->andwhere(['>', 'active', 0])->orderBy(['sort' => SORT_DESC, 'id' => SORT_DESC])->limit(3)->all();
@@ -16,10 +18,23 @@ foreach ($mostliked as $item) {
         array_push($tags, \app\models\Author::findOne($id)->name);
     }
 }
+$style= <<<CSS
+@media (max-width: 767px) {
+   .my-none-displayed-div {
+        margin-bottom: 30px;
+        width: 100%;
+        display: none;
+}
+}
+
+CSS;
+$this->registerCss($style);
 ?>
 
+
 <?= $this->render('_quick_categories') ?>
-<div class="sidebar-module-container">
+<?if(true):?>
+<div class="sidebar-module-container my-none-displayed-div">
     <div class="sidebar-filter">
         <div class="home-banner outer-top-n outer-bottom-xs">
             <a href="<?= $add->url ?>"><img src="/adds/<?= $add->image ?>" alt="Image"
@@ -31,6 +46,8 @@ foreach ($mostliked as $item) {
             <div class="owl-carousel sidebar-carousel custom-carousel owl-theme outer-top-ss">
                 <? foreach ($discounted_books as $item):
                     $url = Url::to(['/site/bookview', 'code' => $item->code]);
+                    $price=(int)($item->price);
+                    $delflag=$userBalans-$price;
                     ?>
                     <div class="item">
                         <div class="products">
@@ -67,13 +84,23 @@ foreach ($mostliked as $item) {
                             <div class="cart clearfix animate-effect">
                                 <div class="action">
                                     <div class="add-cart-button btn-group">
-                                        <button class="btn btn-primary icon" onclick="add_to_card('<?= $item->code ?>')"
-                                                data-toggle="dropdown" type="button"><i class="fa fa-shopping-cart"></i>
-                                        </button>
-                                        <button class="btn btn-primary cart-btn"
-                                                onclick="add_to_card('<?= $item->code ?>')" type="button">Savatga
-                                            qo'shish
-                                        </button>
+                                        <?if(!$item->arenda):?>
+                                            <button class="btn btn-primary icon" onclick="add_to_card('<?= $item->code ?>')"
+                                                    data-toggle="dropdown" type="button"><i class="fa fa-shopping-cart"></i>
+                                            </button>
+                                            <button class="btn btn-primary cart-btn"
+                                                    onclick="add_to_card('<?= $item->code ?>')" type="button">Savatga
+                                                qo'shish
+                                            </button>
+                                        <?
+                                        else:?>
+                                            <a class="btn btn-primary icon" href="<?=Url::to(['/download/download','code'=>$item->code])?>"
+                                                    data-toggle="dropdown" type="button" <?=!Yii::$app->user->isGuest && $item->price && $delflag>0?'data-confirm="'.$userBalans.' sum bo\'lgan balansingizdan '.$price.' sum bo\'lgan kitobni sotib olmoqchimisiz?  Balansingizda '.$delflag.' sum qoladi."':''?> ><i class="fa fa-download"></i>
+                                            </a>
+                                            <a class="btn btn-primary cart-btn"
+                                               href="<?=Url::to(['/download/download','code'=>$item->code])?>" type="button">Yuklab olish
+                                            </a>
+                                        <?endif;?>
                                     </div>
                                 </div>
                                 <!-- /.action -->
@@ -97,7 +124,7 @@ foreach ($mostliked as $item) {
                     <img class="img-responsive" src="/uploads/<?= $item->image ?>"
                          alt="">
                     <h4>
-                        <a href="blog-details.html"><?= mb_substr($item->name, 0, 43, 'utf8') ?><?= strlen($item->name) > 43 ? '...' : '' ?></a>
+                        <a href="<?=$url?>"><?= mb_substr($item->name, 0, 43, 'utf8') ?><?= strlen($item->name) > 43 ? '...' : '' ?></a>
                     </h4>
                     <span class="review"><i class="fa fa-eye"> <?= $item->show_counter ?></i></span>
                     <span class="date-time" style="margin-left: 15px"><i
@@ -129,3 +156,4 @@ foreach ($mostliked as $item) {
     <!-- /.sidebar-filter -->
 </div>
 <!-- /.sidebar-module-container -->
+<?php endif;?>

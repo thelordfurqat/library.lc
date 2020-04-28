@@ -25,6 +25,9 @@ if($item->old_price>$item->price){
     $status=(100 - (int)($item->price * 100 / $item->old_price)).'%';
     $class='hot';
 }
+$userBalans=(int)(\app\models\User::findOne(Yii::$app->user->id)->balans);
+$price=(int)($item->price);
+$delflag=$userBalans-$price;
  ?>
 <div class="products">
     <div class="product">
@@ -54,8 +57,14 @@ if($item->old_price>$item->price){
             <div class="action">
                 <ul class="list-unstyled">
                     <li class="add-cart-button btn-group">
-                        <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="<?=$item->arenda && !$item->price?'Yuklash':'Savatga'?>"> <i class="fa fa-<?=$item->arenda && !$item->price?'download':'shopping-cart'?>"></i> </button>
-                        <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button"><?=$item->arenda && !$item->price?'Yuklash':'Savatga'?></button>
+                        <?if(!$item->arenda):?>
+                        <button onclick="add_to_card('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon" type="button" title="<?=$item->arenda?'Yuklash':'Savatga'?>"> <i class="fa fa-<?=$item->arenda?'download':'shopping-cart'?>"></i> </button>
+                        <button onclick="add_to_card('<?=$item->code?>')" class="btn btn-primary cart-btn" type="button"><?=$item->arenda?'Yuklash':'Savatga'?></button>
+                        <?
+                        else:?>
+                            <a href="<?=Url::to(['/download/download','code'=>$item->code])?>" <?=!Yii::$app->user->isGuest && $price && $delflag>0?'data-confirm="'.$userBalans.' sum bo\'lgan balansingizdan '.$price.' sum bo\'lgan kitobni sotib olmoqchimisiz?  Balansingizda '.$delflag.' sum qoladi."':''?> data-toggle="tooltip" class="btn btn-primary icon" type="button" title="<?=$item->arenda?'Yuklash':'Savatga'?>"> <i class="fa fa-<?=$item->arenda?'download':'shopping-cart'?>"></i> </a>
+                            <a href="<?=Url::to(['/download/download','code'=>$item->code])?>" <?=!Yii::$app->user->isGuest && $price && $delflag>0?'data-confirm="'.$userBalans.' sum bo\'lgan balansingizdan '.$price.' sum bo\'lgan kitobni sotib olmoqchimisiz?  Balansingizda '.$delflag.' sum qoladi."':''?> class="btn btn-primary cart-btn" type="button"><?=$item->arenda?'Yuklash':'Savatga'?></a>
+                        <?endif;?>
                     </li>
                     <li class="add-cart-button btn-group">
                         <button onclick="add_to_wishlist('<?=$item->code?>')" data-toggle="tooltip" class="btn btn-primary icon text-red" type="button" title="Saralanganlarga"> <i class="fa fa-heart"></i> </button>

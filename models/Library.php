@@ -194,7 +194,7 @@ class Library extends \yii\db\ActiveRecord
     public function getBooks()
     {
         $array=[];
-        $query='SELECT * FROM Book WHERE ';
+        $query='SELECT * FROM book WHERE ';
         $have=false;
         foreach ($this->users as $item) {
             if ($have)
@@ -209,7 +209,7 @@ class Library extends \yii\db\ActiveRecord
     public function getBooksCount()
     {
         $array=0;
-        $query='SELECT * FROM Book WHERE ';
+        $query='SELECT * FROM book WHERE ';
         $have=false;
         foreach ($this->users as $item) {
             if ($have)
@@ -224,7 +224,7 @@ class Library extends \yii\db\ActiveRecord
 
     public function getBooksQuery()
     {
-        $query='SELECT * FROM Book WHERE ';
+        $query='SELECT * FROM book WHERE ';
         $have=false;
         foreach ($this->users as $item) {
             if ($have)
@@ -234,7 +234,7 @@ class Library extends \yii\db\ActiveRecord
         }
         if($have)
         return $query;
-        else return 'SELECT * FROM Book WHERE user_id=-1';
+        else return 'SELECT * FROM book WHERE user_id=-1';
     }
 
 }

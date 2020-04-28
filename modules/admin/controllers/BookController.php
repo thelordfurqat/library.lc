@@ -32,7 +32,7 @@ class BookController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'allow' => true,
+                        'allow' => !Yii::$app->user->isGuest && (Yii::$app->user->identity->role->role=='Admin' || Yii::$app->user->identity->role->role=='Muharrir'),
                         'roles' => ['@'],
                     ],
                 ],

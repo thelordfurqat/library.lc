@@ -42,7 +42,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     {
         return [
             [['role_id', 'name', 'username'], 'required'],
-            [['role_id', 'country_id', 'region_id', 'district_id', 'status', 'active'], 'integer'],
+            [['role_id','balans', 'country_id', 'region_id', 'district_id', 'status', 'active'], 'integer'],
             [['created', 'updated'], 'safe'],
             [['name', 'image', 'username', 'email', 'address'], 'string', 'max' => 255],
             [['password'], 'string', 'max' => 500],

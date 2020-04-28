@@ -3625,38 +3625,6 @@ font-family: FontAwesome;
 .hot-deals .cart .action {
   float: left;
 }
-.hot-deals .cart .action .add-cart-button a {
-  background: none repeat scroll 0 0 #a8a8a8;
-  border: medium none;
-  color: #FFFFFF;
-  display: block;
-  overflow: hidden;
-  position: relative;
-  text-decoration: none;
-  padding: 0px;
-}
-.hot-deals .cart .action .add-cart-button a .icon {
-  background: none repeat scroll 0 0 #575757;
-  color: #FFFFFF;
-  height: 100%;
-  left: 0;
-  font-size: 13px;
-  padding: 11px 0 0;
-  position: absolute;
-  text-align: center;
-  top: 0;
-  width: 35px;
-}
-.hot-deals .cart .action .add-cart-button a span {
-  display: block;
-  margin-left: 35px;
-  overflow: hidden;
-  padding: 8px 13px;
-}
-.hot-deals .cart .action .add-cart-button a:hover,
-.hot-deals .cart .action .add-cart-button a:focus {
-  background: #c6c6c6;
-}
 .breadcrumb {
   background: rgba(0, 0, 0, 0);
   padding: 0;

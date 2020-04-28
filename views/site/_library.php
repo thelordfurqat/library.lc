@@ -1,7 +1,7 @@
 <?php
 
 /* @var $item app\models\User */
-
+$url=\yii\helpers\Url::to(['/site/books', 'library' => $item->id]);
 ?>
 
 <div class="products">
@@ -9,14 +9,14 @@
         <div class="row product-list-row">
             <div class="col col-sm-3 col-lg-3">
                 <div class="product-image">
-                    <div class="image"><a href="<?= \yii\helpers\Url::to(['library-view', 'id' => $item->id]) ?>"> <img src="/library-images/<?=$item->image?>" alt=""></a> </div>
+                    <div class="image"><a href="<?= $url?>"> <img src="/library-images/<?=$item->image?>" alt=""></a> </div>
                 </div>
                 <!-- /.product-image -->
             </div>
             <!-- /.col -->
             <div class="col col-sm-9 col-lg-9">
                 <div class="product-info">
-                    <h3 class="name"><a href="<?=\yii\helpers\Url::to(['library-view','id'=>$item->id])?>"><?=$item->name?></a></h3>
+                    <h3 class="name"><a href="<?=$url?>"><?=$item->name?></a></h3>
                     <div class="product-price">
                         <span class="price"> <?=$item->booksCount?> ta kitob</span>
                     </div>

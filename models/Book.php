@@ -50,6 +50,7 @@ class Book extends \yii\db\ActiveRecord
 
     public $authors_int;
     public $genres_int;
+    public $count;
     /**
      * {@inheritdoc}
      */

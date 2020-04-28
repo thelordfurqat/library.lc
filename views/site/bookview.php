@@ -2,6 +2,10 @@
 /* @var $model app\models\Book */
 $labels=$model->attributeLabels();
 
+$userBalans=(int)(\app\models\User::findOne(Yii::$app->user->id)->balans);
+$price=(int)($model->price);
+$delflag=$userBalans-$price;
+
 use app\models\Book;
 use yii\helpers\Url; ?>
 <div class="body-content outer-top-xs">
@@ -96,8 +100,14 @@ use yii\helpers\Url; ?>
                                             </div>
                                             <div class="col-sm-4 col-xs-3">
                                                 <div class="add-btn">
+                                                    <?if(!($model->arenda )):?>
                                                     <button onclick="add_to_card('<?=$model->code?>')" class="btn btn-primary"><i
-                                                                class="fa fa-<?=$model->arenda && !$model->price?'download':'shopping-cart'?> inner-right-vs"></i> <?=$model->arenda && !$model->price?'Yuklab olish':'Savatga qo\'shish'?></button>
+                                                                class="fa fa-<?=$model->arenda?'download':'shopping-cart'?> inner-right-vs"></i> <?=$model->arenda?'Yuklab olish':'Savatga qo\'shish'?></button>
+                                                    <?
+                                                    else:?>
+                                                    <a href="<?=Url::to(['/download/download','code'=>$model->code])?>" class="btn btn-primary" <?=!Yii::$app->user->isGuest && $price && $delflag>0?'data-confirm="'.$userBalans.' sum bo\'lgan balansingizdan '.$price.' sum bo\'lgan kitobni sotib olmoqchimisiz?  Balansingizda '.$delflag.' sum qoladi."':''?>><i
+                                                                class="fa fa-<?=$model->arenda?'download':'shopping-cart'?> inner-right-vs"></i> <?=$model->arenda?'Yuklab olish':'Savatga qo\'shish'?></a>
+                                                    <?endif;?>
                                                 </div>
                                             </div>
                                         </div><!-- /.row -->

@@ -1,5 +1,26 @@
 <?php
 
+/* @var $search_text string */
+$search_text=null;
+$search_text=$_GET['search_text'];
+
+use app\models\Book;
+use yii\helpers\Url;
+
+
+$session=Yii::$app->session;
+if(!$session->get('books')){
+    $books = Book::find()->where(['user_id' => -1])->all();
+    $session->set('books',$books);
+}
+$books=$session->get('books');
+$total_price=0;
+$total_count=0;
+$total_sum=0;
+foreach ($books as $item) {
+    $total_price+=$item->price*$item->count;
+    $total_count+=$item->count;
+}
 ?>
 <!-- ============================================== HEADER ============================================== -->
 <header class="header-style-1">
@@ -10,11 +31,11 @@
             <div class="header-top-inner">
                 <div class="cnt-account">
                     <ul class="list-unstyled">
-                        <li class="myaccount"><a href="/my-account"><span>Kabinet</span></a></li>
-                        <li class="wishlist"><a href="/wishlist"><span>Saralanganlar</span></a></li>
-                        <li class="header_cart hidden-xs"><a href="/card"><span>Savat</span></a></li>
-                        <li class="check"><a href="/pay"><span>Hisobni to'ldirish</span></a></span></li>
-                        <li class="login"><a href="/login"><span>Kirish</span></a></li>
+                        <li class="myaccount"><a href="/site/my-account"><span>Kabinet</span></a></li>
+                        <li class="wishlist"><a href="/site/wishlist"><span>Saralanganlar</span></a></li>
+                        <li class="header_cart hidden-xs"><a href="/site/card"><span>Savat</span></a></li>
+                        <li class="check"><a href="/site/pay"><span>Hisobni to'ldirish</span></a></span></li>
+                        <li class="login"><?=Yii::$app->user->isGuest?'<a href="/site/login"><span>Kirish</span></a>':'<a href="/site/my-account"><span>'.Yii::$app->user->identity->name.'</span></a>'?></li>
                     </ul>
                 </div>
                 <!-- /.cnt-account -->
@@ -68,14 +89,14 @@
                     <div class="search-area">
                         <?php \yii\widgets\ActiveForm::begin([
                                 'method'=>'get',
-                            'action'=>\yii\helpers\Url::to(['/search'])
+                            'action'=>\yii\helpers\Url::to(['/site/search'])
                         ])?>
                             <div class="control-group">
                                 <div class="categories-filter">
-                                    <a href="/search">Qidirish </a>
+                                    <a href="/site/search">Qidirish </a>
 
                                 </div>
-                                <input class="search-field" id="search-text" name="search-text" placeholder="Kalit so'zni kiriting..."/>
+                                <input class="search-field" id="search-text" name="search_text" <?=$search_text?'value="'.$search_text.'"':''?> placeholder="Kalit so'zni kiriting..."/>
                                 <button type="submit" class="search-button" style="border: none"></button>
                             </div>
                         <?php \yii\widgets\ActiveForm::end()?>
@@ -88,45 +109,8 @@
             <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12 animate-dropdown top-cart-row">
                 <!-- ============================================================= SHOPPING CART DROPDOWN ============================================================= -->
 
-                <div class="dropdown dropdown-cart">
-                    <a href="#" class="dropdown-toggle lnk-cart" data-toggle="dropdown">
-                        <div class="items-cart-inner">
-                            <div class="basket">
-                                <div class="basket-item-count"><span class="count">2</span></div>
-                                <div class="total-price-basket"><span class="lbl">Shopping Cart</span> <span
-                                            class="value">$4580</span> </span> </div>
-                            </div>
-                        </div>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <div class="cart-item product-summary">
-                                <div class="row">
-                                    <div class="col-xs-4">
-                                        <div class="image"><a href="detail.html"><img
-                                                        src="assets/images/products/p4.jpg" alt=""></a></div>
-                                    </div>
-                                    <div class="col-xs-7">
-                                        <h3 class="name"><a href="index8a95.html?page-detail">Simple Product</a></h3>
-                                        <div class="price">$600.00</div>
-                                    </div>
-                                    <div class="col-xs-1 action"><a href="#"><i class="fa fa-trash"></i></a></div>
-                                </div>
-                            </div>
-                            <!-- /.cart-item -->
-                            <div class="clearfix"></div>
-                            <hr>
-                            <div class="clearfix cart-total">
-                                <div class="pull-right"><span class="text">Sub Total :</span><span
-                                            class='price'>$600.00</span></div>
-                                <div class="clearfix"></div>
-                                <a href="checkout.html" class="btn btn-upper btn-primary btn-block m-t-20">Checkout</a>
-                            </div>
-                            <!-- /.cart-total-->
-
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-menu-->
+                <div class="dropdown dropdown-cart" id="card_body">
+                   <?=$this->render('/site/_card_form')?>
                 </div>
                 <!-- /.dropdown-cart -->
             </div>

@@ -18,6 +18,7 @@ use app\models\search\SubjectSearch;
 use app\models\search\UserSearch;
 use app\models\Subject;
 use app\models\User;
+use Codeception\Lib\Generator\Shared\Classname;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
@@ -107,7 +108,7 @@ class SiteController extends Controller
         ]);
     }
 
-    public function actionBooks($author=null,$genre=null,$subject=null,$publisher=null,$region=null)
+    public function actionBooks($author=null,$genre=null,$subject=null,$publisher=null,$region=null,$library=null)
     {
         $query = Book::find()->where(['status' => 1]);
         if($author)
@@ -118,10 +119,14 @@ class SiteController extends Controller
             $query = Book::find()->where(['status' => 1])->andWhere(['subject_id'=>$subject]);
         if($publisher)
             $query = Book::find()->where(['status' => 1])->andWhere(['publisher_id'=>$publisher]);
+
+        if($library){
+            $query = Book::findBySql(Library::findOne($library)->booksQuery);
+            if(!Book::findBySql(Library::findOne($library)->booksQuery)->count())
+                throw new NotFoundHttpException('Kitoblar topilmadi');
+        }
         if($region!=null){
-            $query = 'BU JOYINI KELAJAKDA QILAMIZ';
-            debug($query);
-            exit();
+            throw new NotFoundHttpException('Ma\'lumotlar topilmadi');
         }
         $defaultOrder = ['created'=>SORT_DESC];
         $searchModel = new BookSearch();
@@ -186,7 +191,11 @@ class SiteController extends Controller
     }
     public function actionSubjects()
     {
-        $query = Subject::find();
+        foreach (Subject::find()->all() as $item) {
+            $item->count=$item->booksCount;
+            $item->save();
+        }
+        $query = Subject::find()->where(['>','count',0]);
 
         $searchModel = new SubjectSearch();
         $dataProvider = new ActiveDataProvider([
@@ -379,5 +388,199 @@ class SiteController extends Controller
             throw new NotFoundHttpException('Ma\'lumotlar topilmadi');
         }
 
+    }
+    public function actionSearch($search_text=null)
+    {
+//        debug($search_text);
+//        exit();
+        if(!$search_text || ctype_space($search_text)){
+            return $this->render('search-not-found',[
+                'message'=>'Tezkor ma\'lumot qidirish tizimi! Iltimos kalit so\'zni kiriting!'
+            ]);
+        }
+        $have=false;
+        $BookDP=null;
+        $LibraryDP=null;
+        $SubjectDP=null;
+        $GenreDP=null;
+        $AuthorDP=null;
+        $NewDP=null;
+        if(Book::find()->filterWhere(['like','name',$search_text])->andWhere(['status' => 1])->count()){
+            $have=true;
+            $query = Book::find()->filterWhere(['like','name',$search_text])->andWhere(['status' => 1]);
+
+            $defaultOrder = ['created'=>SORT_DESC];
+            $BookDP = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 20,
+                ],
+                'sort' => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+            ]);
+        }
+        if(Library::find()->filterWhere(['like','name',$search_text])->andWhere(['status' => 1])->count()){
+            $have=true;
+            $query = Library::find()->filterWhere(['like','name',$search_text])->andWhere(['status' => 1]);
+
+            $defaultOrder = ['created'=>SORT_DESC];
+            $LibraryDP = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 10,
+                ],
+                'sort' => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+            ]);
+
+        }
+
+        if(Subject::find()->filterWhere(['like','name',$search_text])->andWhere(['>','count',0])->count()){
+            $have=true;
+            $query = Subject::find()->filterWhere(['like','name',$search_text])->andWhere(['>','count',0]);
+
+            $defaultOrder = ['id'=>SORT_DESC];
+            $SubjectDP = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 5,
+                ],
+                'sort' => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+            ]);
+
+        }
+
+        if(Genre::find()->filterWhere(['like','name',$search_text])->andWhere(['>','count',0])->count()){
+            $have=true;
+            $query = Genre::find()->filterWhere(['like','name',$search_text])->andWhere(['>','count',0]);
+
+            $defaultOrder = ['id'=>SORT_DESC];
+            $GenreDP = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 5,
+                ],
+                'sort' => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+            ]);
+
+        }
+
+        if(Author::find()->filterWhere(['like','name',$search_text])->count()){
+            $have=true;
+            $query = Author::find()->filterWhere(['like','name',$search_text]);
+
+            $defaultOrder = ['id'=>SORT_DESC];
+            $AuthorDP = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 5,
+                ],
+                'sort' => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+            ]);
+
+        }
+
+        if(News::find()->filterWhere(['like','name',$search_text])->andWhere(['status' => 1])->count()){
+            $have=true;
+            $query = News::find()->filterWhere(['like','name',$search_text])->andWhere(['status' => 1]);
+
+            $defaultOrder = ['created'=>SORT_DESC];
+            $NewDP = new ActiveDataProvider([
+                'query' => $query,
+                'pagination' => [
+                    'defaultPageSize' => 10,
+                ],
+                'sort' => [
+                    'defaultOrder' => $defaultOrder,
+                ],
+            ]);
+
+        }
+
+        if(!$have){
+            return $this->render('search-not-found',[
+                'message'=>'Siz kiritgan kalit so\'z <b>"'.$search_text.'"</b> bo\'yicha ma\'lumotlar topilmadi.<br> Qaytadan urinib ko\'ring.'
+            ]);
+        }
+        return $this->render('search',[
+            'BookDP'=>$BookDP,
+            'LibraryDP'=>$LibraryDP,
+            'SubjectDP'=>$SubjectDP,
+            'GenreDP'=>$GenreDP,
+            'AuthorDP'=>$AuthorDP,
+            'NewDP'=>$NewDP,
+        ]);
+    }
+
+    public function actionAddToCard($code){
+        $book=Book::find()->where(['code'=>$code])->one();
+        $book->count = 1;
+
+        if($book->arenda && !$book->price){
+            if(Yii::$app->user->isGuest)
+                return $this->redirect(['/site/login']);
+        }
+
+        $session=Yii::$app->session;
+//        $session->destroy();
+        if(!$session->get('books')){
+            $books = Book::find()->where(['user_id' => -1])->all();
+            $session->set('books',$books);
+        }
+        $books=$session->get('books');
+//        return debug($books);
+        if(!sizeof($books)){
+            array_push($books,$book);
+        }
+        else{
+            $have_not=true;
+            foreach ($books as $item) {
+                if($item->code==$code){
+                    $item->count++;
+                    $have_not=false;
+                    break;
+                }
+            }
+            if($have_not)
+                array_push($books,$book);
+        }
+//        return debug($books);
+
+
+        $session->set('books',$books);
+//                $session->set('books',Book::find()->where(['user_id'=>-1])->all());
+
+        $this->layout='empty.php';
+
+        $total_price=0;
+        $total_count=0;
+        foreach ($books as $item) {
+            $total_price+=$item->price*$item->count;
+            $total_count+=$item->count;
+        }
+
+        return $this->render('_card_form');
+    }
+    public function actionDeleteFromCard($code){
+        $session=Yii::$app->session;
+        $books=$session->get('books');
+        foreach ($books as $k=>$item) {
+            if($item->code==$code){
+//                    $session->remove('books['.$k.']');
+                unset($books[$k]);
+                break;
+            }
+        }
+        $session->set('books',$books);
+        $this->layout='empty.php';
+        return $this->render('_card_form');
     }
 }
