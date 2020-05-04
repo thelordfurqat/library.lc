@@ -20,6 +20,7 @@ use app\models\Subject;
 use app\models\User;
 use Codeception\Lib\Generator\Shared\Classname;
 use Yii;
+use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -260,15 +261,62 @@ class SiteController extends Controller
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
+        $newUser=new User();
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
+            $m=User::findOne(Yii::$app->user->identity->id);
+            $m->active=1;
+            $m->save();
             return $this->goBack();
         }
 
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
+            'newUser'=>$newUser,
+        ]);
+    }
+
+    public function actionRegister()
+    {
+        $model=new User();
+        if($model->load(Yii::$app->request->post()) && $model->password==$model->repeat_password){
+            if($model->password!=$model->repeat_password){
+                Yii::$app->session->setFlash('error_validate_password','Parolni takrorlashda xatolik!');
+                $model->password='';
+                $model->repeat_password='';
+                return $this->render('login', [
+                    'model' => new LoginForm(),
+                    'newUser'=>$model,
+                ]);
+            }
+
+            $model->role_id=3;
+            $model->username=$model->email;
+            $model->encrypt();
+            $model->active=1;
+            $model->save();
+            $log=new LoginForm();
+            $log->username=$model->username;
+            $log->password=$model->repeat_password;
+            $log->rememberMe=true;
+            if($log->login() && $model->save())
+            return $this->goBack();
+            else
+                Yii::$app->session->setFlash('error_validate_password','Parolni takrorlashda xatolik!');
+        }
+
+        $model->password='';
+        $model->repeat_password='';
+        return $this->render('login', [
+            'model' => new LoginForm(),
+            'newUser'=>$model,
+        ]);
+    }
+    public function actionMyAccount()
+    {
+        return $this->render('my-account',[
+            'model'=>User::findOne(Yii::$app->user->id),
         ]);
     }
 
@@ -279,6 +327,9 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
+        $m=User::findOne(Yii::$app->user->identity->id);
+        $m->active=0;
+        $m->save();
         Yii::$app->user->logout();
 
         return $this->goHome();

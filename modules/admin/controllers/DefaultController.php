@@ -25,6 +25,10 @@ class DefaultController extends Controller
                 'only'=>['logout'],
                 'rules' => [
                     [
+                        'allow' => !Yii::$app->user->isGuest && (Yii::$app->user->identity->role->role=='Admin' || Yii::$app->user->identity->role->role=='Muharrir'),
+                        'roles' => ['@'],
+                    ],
+                    [
                         'actions' => ['logout'],
                         'allow' => true,
                         'roles' => ['@'],
@@ -34,6 +38,7 @@ class DefaultController extends Controller
                         'allow' => true,
                         'roles' => ['?'],
                     ],
+
                 ],
             ],
             'verbs' => [

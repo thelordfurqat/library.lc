@@ -27,6 +27,7 @@ use yii\web\UploadedFile;
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+    public $repeat_password;
     /**
      * @inheritdoc
      */
@@ -46,6 +47,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             [['created', 'updated'], 'safe'],
             [['name', 'image', 'username', 'email', 'address'], 'string', 'max' => 255],
             [['password'], 'string', 'max' => 500],
+            [['repeat_password'], 'string', 'max' => 500],
             [['phone'], 'string', 'max' => 20],
             [['country_id'], 'exist', 'skipOnError' => true, 'targetClass' => Country::className(), 'targetAttribute' => ['country_id' => 'id']],
             [['district_id'], 'exist', 'skipOnError' => true, 'targetClass' => District::className(), 'targetAttribute' => ['district_id' => 'id']],
@@ -67,7 +69,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'username' => 'Login',
             'password' => 'Parol',
             'email' => 'Email',
-            'phone' => 'Tel',
+            'phone' => 'Telefon',
             'country_id' => 'Mamlakat',
             'region_id' => 'Viloyat',
             'district_id' => 'Tuman (Shaxar)',

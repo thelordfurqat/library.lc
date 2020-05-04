@@ -31,11 +31,15 @@ foreach ($books as $item) {
             <div class="header-top-inner">
                 <div class="cnt-account">
                     <ul class="list-unstyled">
-                        <li class="myaccount"><a href="/site/my-account"><span>Kabinet</span></a></li>
                         <li class="wishlist"><a href="/site/wishlist"><span>Saralanganlar</span></a></li>
                         <li class="header_cart hidden-xs"><a href="/site/card"><span>Savat</span></a></li>
-                        <li class="check"><a href="/site/pay"><span>Hisobni to'ldirish</span></a></span></li>
-                        <li class="login"><?=Yii::$app->user->isGuest?'<a href="/site/login"><span>Kirish</span></a>':'<a href="/site/my-account"><span>'.Yii::$app->user->identity->name.'</span></a>'?></li>
+                        <?if(Yii::$app->user->isGuest):?>
+                        <li class="login"><a href="/site/login"><span>Kirish</span></a></li>
+                        <?else:?>
+                            <li class="check"><a href="/site/pay"><span>Hisobni to'ldirish</span></a></span></li>
+                            <li class="login"><a href="/site/my-account"><span><?=Yii::$app->user->identity->name?></span></a></li>
+                            <li class="myaccount"><a href="<?= Yii::$app->urlManager->createUrl(['/site/logout'])?>" data-method="post"><span>Chiqish</span></a></li>
+                        <?endif;?>
                     </ul>
                 </div>
                 <!-- /.cnt-account -->

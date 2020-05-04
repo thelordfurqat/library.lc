@@ -47,10 +47,13 @@ class DownloadController extends Controller
         $book=Book::find()->where(['code'=>$code])->one();
         $files=$book->files;
         $user=User::findOne(Yii::$app->user->id);
+        $userBalans=(int)(\app\models\User::findOne(Yii::$app->user->id)->balans);
+        $price=(int)($book->price);
+        $delflag=$userBalans-$price;
         if( $user->balans<$book->price)
             return $this->redirect(['/site/pay']);
         if (sizeof($files) && $user->balans>=$book->price) {
-            $user->balans-=$book->price;
+            $user->balans=$delflag;
             $user->save();
             $this->createZip($files);
             $book->sales++;
